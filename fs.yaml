@@ -31,8 +31,8 @@ remote_fs:
         existing_ok: true
         name: myvnet
         subnet:
-          address_prefix: 10.0.0.0/24
-          name: my-server-subnet
+          address_prefix: 10.0.1.0/24
+          name: storage-subnet
       network_security:
         ssh:
         - '*'

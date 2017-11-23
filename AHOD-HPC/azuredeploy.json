@@ -147,6 +147,7 @@
 		"subnetPrefix": "10.0.0.0/24",
 		"vnetID": "[resourceId(parameters('vnetResourceGroup'),'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
 		"virtualNetworkName": "[resourceId(parameters('vnetResourceGroup'),'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
+		"subnetName": "compute-subnet",
 		"subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('subnetName'))]",
 		"publicIPAddressName": "[concat(variables('namingInfix'), '-pip')]",
 		"publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
