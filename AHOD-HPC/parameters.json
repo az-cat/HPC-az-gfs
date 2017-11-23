@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"solver": {
+			"value": "Raw"
+		},
+		"jumpboxSku": {
+			"value": "Standard_D3_v2"
+		},
+		"vmSku": {
+			"value": "Standard_H16r"
+		},
+		"vmssName": {
+			"value": "_VMSSNAME"
+		},
+		"instanceCount": {
+			"value": 3
+		},
+		"adminUsername": {
+			"value": "azureuser"
+		},
+		"rsaPublicKey": {
+			"value": "_RSAKEY"
+		},
+		"license": {
+			"value": "0.0.0.0"
+		},
+		"downloadModel": {
+			"value": "None"
+		},
+		"vnetName": {
+			"value": "myvnet"
+		},
+		"vnetResourceGroup": {
+			"value": "_RGNAME"
+		},
+		"subnetName": {
+			"value": "my-server-subnet"
+		},
+		"gfsip": {
+			"value": "_GFSIP"
+		}
+	}
+}
