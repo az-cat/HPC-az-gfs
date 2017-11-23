@@ -5,6 +5,9 @@ RG=$1
 NEWID=`uuidgen | cut -c 1-5`
 user=azureuser
 rundir=`date +%Y%m%d_%H%M%S`_$RG
+#Size of GFS in TB
+GFSSIZE=4
+
 mkdir -p $rundir
 cp -r AHOD-HPC $rundir/
 cp *.yaml $rundir/
