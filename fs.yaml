@@ -40,7 +40,7 @@ remote_fs:
         enabled: false
         static: false  
       vm_count: 2
-      vm_size: STANDARD_F16S
+      vm_size: STANDARD_F8S
       vm_disk_map:
         '0':
           disk_array:

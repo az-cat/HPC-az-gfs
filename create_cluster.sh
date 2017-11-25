@@ -9,8 +9,9 @@ rundir=`date +%Y%m%d_%H%M%S`_$RG
 GFSSIZE=4
 
 mkdir -p $rundir
-cp -r AHOD-HPC $rundir/
+cp -r scripts $rundir/
 cp *.yaml $rundir/
+cp *.json $rundir/
 cp create_cluster.sh $rundir/
 cd $rundir
 ############################################
@@ -37,15 +38,15 @@ SHIPYARD_CONFIGDIR=. shipyard fs cluster add -y mystoragecluster
 nicname=`az network nic list -g $RG --query "[?contains(name,'-ni0')].{ name: name }" -o tsv`
 nicprivip=`az network nic show -g $RG -n $nicname --query [ipConfigurations[0].privateIpAddress] -o tsv`
 
-#CREATE COMPUTE CLUSTER USING THE AHOD-HPC TEMPLATES
+#CREATE COMPUTE CLUSTER USING THE TEMPLATES
 echo ------------------------- `date +%F" "%T` Creating Compute Cluster
-cp AHOD-HPC/parameters.json AHOD-HPC/.parameters.json.orig
+cp parameters.json .parameters.json.orig
 rsakey=`cat id_rsa_shipyard_remotefs.pub`
-sed -i "s/_VMSSNAME/comp$NEWID/g" AHOD-HPC/parameters.json
-sed -i "s/_RGNAME/$RG/g" AHOD-HPC/parameters.json
-sed -i "s/_GFSIP/$nicprivip/g" AHOD-HPC/parameters.json
-sed -i "s%_RSAKEY%$rsakey%g" AHOD-HPC/parameters.json
-az group deployment create --name computedeployment --resource-group $RG --template-file AHOD-HPC/azuredeploy.json --parameters @AHOD-HPC/parameters.json > /dev/null 2>&1
+sed -i "s/_VMSSNAME/comp$NEWID/g" parameters.json
+sed -i "s/_RGNAME/$RG/g" parameters.json
+sed -i "s/_GFSIP/$nicprivip/g" parameters.json
+sed -i "s%_RSAKEY%$rsakey%g" parameters.json
+az group deployment create --name computedeployment --resource-group $RG --template-file azuredeploy.json --parameters @parameters.json > /dev/null 2>&1
 
 #GET IP AND SETUP LONGTERM STORAGE ON REMOTE HOST
 jbnicname=`az network nic list -g $RG --query "[?contains(name,'-nic')].{ name: name }" -o tsv`

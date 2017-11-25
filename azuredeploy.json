@@ -154,8 +154,7 @@
 			"nicName": "[concat(variables('namingInfix'), '-nic')]",
 			"ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
 			"scriptUrl": "https://raw.githubusercontent.com/tanewill/AHOD-HPC/master/",
-			"cnSetupScript": "cn-setup.sh",
-			"hnSetupScript": "hn-setup.sh",
+			"gfsScriptUrl": "https://raw.githubusercontent.com/tanewill/azhpc_gfs/master",
 			"osType": {
 					"publisher": "OpenLogic",
 					"offer": "CentOS-HPC",
@@ -172,8 +171,8 @@
 			"JBimageReference": "[variables('JBoxType')]",
 			"vmScripts": {
 					"scriptsToDownload": [
-							"[concat(variables('scriptUrl'), 'scripts/cn-setup_gfs.sh')]",
-							"[concat(variables('scriptUrl'), 'scripts/hn-setup_gfs.sh')]",
+							"[concat(variables('gfsScriptUrl'), 'scripts/cn-setup_gfs.sh')]",
+							"[concat(variables('gfsScriptUrl'), 'scripts/hn-setup_gfs.sh')]",
 							"[concat(variables('scriptUrl'), 'scripts/install_ganglia.sh')]",
 							"[concat(variables('scriptUrl'), 'scripts/clusRun.sh')]",
 							"[concat(variables('scriptUrl'), 'solvers/install-', parameters('solver'), '.sh')]"
@@ -185,24 +184,21 @@
 			"storageApiVersion": "2015-06-15"
 	},
 	"resources": [
-	{
-			"type": "Microsoft.Storage/storageAccounts",
+	{	"type": "Microsoft.Storage/storageAccounts",
 			"name": "[variables('ltsName')]",
 			"apiVersion": "[variables('storageApiVersion')]",
 			"location": "[variables('resourceLocation')]",
 			"properties": {
 					"accountType": "Standard_LRS"
 			}
-	},{
+	},{	"type": "Microsoft.Network/virtualNetworks/subnets",
 			"apiVersion": "2015-06-15",
-			"type": "Microsoft.Network/virtualNetworks/subnets",
 			"name": "[concat(parameters('vnetName'), '/',variables('subnetName'))]",
 			"location": "[resourceGroup().location]",
 			"properties": {
 					"addressPrefix": "[variables('subnetPrefix')]"
 			}
-	},{
-			"type": "Microsoft.Network/publicIPAddresses",
+	},{	"type": "Microsoft.Network/publicIPAddresses",
 			"name": "[variables('publicIPAddressName')]",
 			"apiVersion": "[variables('networkApiVersion')]",
 			"location": "[variables('resourceLocation')]",
@@ -212,8 +208,7 @@
 							"domainNameLabel": "[variables('longNamingInfix')]"
 					}
 			}
-	}, {
-			"type": "Microsoft.Network/networkInterfaces",
+	},{	"type": "Microsoft.Network/networkInterfaces",
 			"name": "[variables('jumpBoxNicName')]",
 			"apiVersion": "[variables('networkApiVersion')]",
 			"location": "[variables('resourceLocation')]",
@@ -235,8 +230,7 @@
 					"[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
 					"[concat('Microsoft.Network/virtualNetworks/',parameters('vnetName'),'/subnets/', variables('subnetName'))]"
 			]
-	}, {
-			"type": "Microsoft.Compute/virtualMachines",
+	},{	"type": "Microsoft.Compute/virtualMachines",
 			"name": "[variables('jumpBoxName')]",
 			"apiVersion": "[variables('computeApiVersion')]",
 			"location": "[variables('resourceLocation')]",
@@ -303,8 +297,7 @@
 			"dependsOn": [
 					"[concat('Microsoft.Network/networkInterfaces/', variables('jumpBoxNicName'))]"
 			]
-	}, {
-			"type": "Microsoft.Compute/virtualMachineScaleSets",
+	},{	"type": "Microsoft.Compute/virtualMachineScaleSets",
 			"sku": {
 					"name": "[parameters('vmSku')]",
 					"tier": "Standard",
