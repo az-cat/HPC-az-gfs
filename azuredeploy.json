@@ -295,7 +295,7 @@
 					]
 			}],
 			"dependsOn": [
-					"[concat('Microsoft.Network/networkInterfaces/', variables('jumpBoxNicName'))]"
+			    "[concat('Microsoft.Network/networkInterfaces/', variables('jumpBoxNicName'))]"
 			]
 	},{	"type": "Microsoft.Compute/virtualMachineScaleSets",
 			"sku": {
@@ -347,6 +347,7 @@
 					}
 			},
 			"dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/subnets/',variables('subnetName'))]"
 			]
 	}]
 }
