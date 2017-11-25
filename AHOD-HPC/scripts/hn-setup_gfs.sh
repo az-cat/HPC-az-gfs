@@ -1,5 +1,6 @@
 #!/bin/bash
-set -x
+#set -x
+#set +e
 
 SOLVER=$1
 USER=$2
@@ -20,6 +21,8 @@ echo Model is: $DOWN
 cat << EOF >> /etc/security/limits.conf
 *               hard    memlock         unlimited
 *               soft    memlock         unlimited
+*               hard    nofile          65535
+*               soft    nofile          65535
 EOF
 
 #Create directories needed for configuration
@@ -33,6 +36,7 @@ mkdir -p /mnt/gfs
 
 
 ln -s /mnt/resource/scratch/ /home/$USER/scratch
+ln -s /mnt/gfs /home/$USER/gfs
 ln -s /mnt/lts /home/$USER/lts
 
 #Following lines are only needed if the head node is an RDMA connected VM
@@ -43,19 +47,19 @@ ln -s /mnt/lts /home/$USER/lts
 
 #Install needed packages
 yum check-update
-yum install -y -q nfs-utils pdsh epel-release sshpass nmap htop pdsh screen git psmisc glusterfs glusterfs-fuse attr
-yum install -y gcc libffi-devel python-devel openssl-devel --disableexcludes=all
-yum groupinstall -y "X Window System"
-
-#install az cli
-curl -L https://aka.ms/InstallAzureCli | bash
+yum install -y -q nfs-utils pdsh epel-release sshpass nmap htop pdsh screen git psmisc glusterfs glusterfs-fuse attr cifs-utils
+yum install -y -q gcc libffi-devel python-devel openssl-devel --disableexcludes=all
+yum groupinstall -y -q "X Window System"
 
 #Use ganglia install script to install ganglia, this is downloaded via the ARM template
 chmod +x install_ganglia.sh
 ./install_ganglia.sh $myhost azure 8649
 
-#Setup the NFS server
+#sudo mount -t cifs //myStorageAccount.file.core.windows.net/mystorageshare /mnt/mymountdirectory -o vers=3.0,username=mystorageaccount,password=mystorageaccountkey,dir_mode=0777,file_mode=0777
+#Setup the NFS server, mount the gluster, get Long Term Storage Keys
 echo "/mnt/resource/scratch $localip.*(rw,sync,no_root_squash,no_all_squash)" | tee -a /etc/exports
+echo "$GFSIP:/gv0       /mnt/gfs  glusterfs   defaults,_netdev  0  0" | tee -a /etc/fstab
+
 systemctl enable rpcbind
 systemctl enable nfs-server
 systemctl enable nfs-lock
@@ -65,11 +69,14 @@ systemctl start nfs-server
 systemctl start nfs-lock
 systemctl start nfs-idmap
 systemctl restart nfs-server
+mount -a
 
-mv clusRun.sh cn-setup.sh /home/$USER/bin
+
+mv clusRun.sh cn-setup_gfs.sh /home/$USER/bin
 chmod +x /home/$USER/bin/*.sh
 chown $USER:$USER /home/$USER/bin
 nmap -sn $localip.* | grep $localip. | awk '{print $5}' > /home/$USER/bin/hostips
+export WCOLL=/home/$USER/bin/hostips
 
 sed -i '/\<'$IP'\>/d' /home/$USER/bin/hostips
 sed -i '/\<10.0.0.1\>/d' /home/$USER/bin/hostips
@@ -77,8 +84,7 @@ sed -i '/\<10.0.0.1\>/d' /home/$USER/bin/hostips
 echo -e  'y\n' | ssh-keygen -f /home/$USER/.ssh/id_rsa -t rsa -N ''
 echo 'Host *' >> /home/$USER/.ssh/config
 echo 'StrictHostKeyChecking no' >> /home/$USER/.ssh/config
-echo "$GFSIP:/gv0       /mnt/gfs  glusterfs   defaults,_netdev  0  0" | tee -a /etc/fstab
-mount -a
+
 chmod 400 /home/$USER/.ssh/config
 chown $USER:$USER /home/$USER/.ssh/config
 
@@ -98,8 +104,8 @@ for name in `cat /home/$USER/bin/hostips`; do
         sshpass -p "$PASS" ssh $USER@$name "chmod 700 .ssh; chmod 640 .ssh/authorized_keys; chmod 400 .ssh/config; chmod 400 .ssh/id_rsa"
         cat /home/$USER/bin/hostips | sshpass -p "$PASS" ssh $USER@$name "cat >> /home/$USER/hostips"
         cat /home/$USER/bin/hosts | sshpass -p "$PASS" ssh $USER@$name "cat >> /home/$USER/hosts"
-        cat /home/$USER/bin/cn-setup.sh | sshpass -p "$PASS" ssh $USER@$name "cat >> /home/$USER/cn-setup.sh"
-        sshpass -p $PASS ssh -t -t -o ConnectTimeout=2 $USER@$name 'echo "'$PASS'" | sudo -S sh /home/'$USER'/cn-setup.sh '$IP $USER $myhost $GFSIP &
+        cat /home/$USER/bin/cn-setup_gfs.sh | sshpass -p "$PASS" ssh $USER@$name "cat >> /home/$USER/cn-setup_gfs.sh"
+        sshpass -p $PASS ssh -t -t -o ConnectTimeout=2 $USER@$name 'echo "'$PASS'" | sudo -S sh /home/'$USER'/cn-setup_gfs.sh '$IP $USER $myhost $GFSIP & > /dev/null 2>&1
 done
 
 
@@ -119,3 +125,5 @@ sed -i 's/^Defaults[ ]*requiretty/# Defaults requiretty/g' /etc/sudoers
 name=`head -1 /home/$USER/bin/hostips`
 cat install-$SOLVER.sh | sshpass -p "$PASS" ssh $USER@$name "cat >> /home/$USER/install-$SOLVER.sh"
 sshpass -p $PASS ssh -t -t -o ConnectTimeout=2 $USER@$name source install-$SOLVER.sh $USER $LICIP $DOWN > script_output
+
+

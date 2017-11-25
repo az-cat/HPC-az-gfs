@@ -2,349 +2,358 @@
 	"$schema": "http://schema.management.azure.com/schemas/2015-01-01-preview/deploymentTemplate.json",
 	"contentVersion": "1.0.0.0",
 	"parameters": {
-		"solver": {
-			"defaultValue": "Raw",
-			"allowedValues": [
-				"ABAQUS",
-				"ANSYS_CFX",
-				"ANSYS_Fluent",
-				"ANSYS_Mechanical",
-				"DataSynapse",
-				"Exa_PowerFlow",
-				"OpenFOAM",
-				"Raw",
-				"StarCCM-10",
-				"StarCCM-11",
-				"StarCCM-12.02010",
-				"StarCCM-12.04010",
-				"StarCCM-12.04011",
-				"StarCCM-12.06004"
-			],
-			"type": "String",
-			"metadata": {
-				"description": "Please select the solver that you would like to test"
+			"solver": {
+					"defaultValue": "Raw",
+					"allowedValues": [
+							"ABAQUS",
+							"ANSYS_CFX",
+							"ANSYS_Fluent",
+							"ANSYS_Mechanical",
+							"DataSynapse",
+							"Exa_PowerFlow",
+							"OpenFOAM",
+							"Raw",
+							"StarCCM-10",
+							"StarCCM-11",
+							"StarCCM-12.02010",
+							"StarCCM-12.04010",
+							"StarCCM-12.04011",
+							"StarCCM-12.06004"
+					],
+					"type": "String",
+					"metadata": {
+							"description": "Please select the solver that you would like to test"
+					}
+			},
+			"jumpboxSku": {
+					"defaultValue": "Standard_D3_v2",
+					"allowedValues": [
+							"Standard_D2_v2",
+							"Standard_D3_v2",
+							"Standard_D4_v2",
+							"Standard_D14_v2"
+					],
+					"type": "String",
+					"metadata": {
+							"description": "Which instance should be used for the jumpbox and ganglia web host?"
+					}
+			},
+			"vmSku": {
+					"defaultValue": "Standard_H16r",
+					"allowedValues": [
+							"Standard_A8",
+							"Standard_A9",
+							"Standard_H16r",
+							"Standard_H16mr",
+							"Standard_NC24r"
+					],
+					"type": "String",
+					"metadata": {
+							"description": "Which instance would you like to deploy to? Not all VMs are available in all regions"
+					}
+			},
+			"vmssName": {
+					"maxLength": 10,
+					"type": "String",
+					"metadata": {
+							"description": "String used as a base for naming resources. Must be 3-10 characters in length and globally unique across Azure. A hash is prepended to this string for some resources, and resource-specific information is appended."
+					}
+			},
+			"instanceCount": {
+					"maxValue": 300,
+					"type": "Int",
+					"metadata": {
+							"description": "Number of VM instances (100 or less)."
+					}
+			},
+			"adminUsername": {
+					"type": "String",
+					"metadata": {
+							"description": "Admin username on all VMs."
+					}
+			},
+			"rsaPublicKey": {
+					"type": "String",
+					"metadata": {
+							"description": "The RSA public key to access the headnode."
+					}
+			},
+			"vnetName": {
+					"defaultValue": "",
+					"type": "string"
+			},
+			"vnetResourceGroup": {
+					"defaultValue": "",
+					"type": "string"
+			},
+			"subnetName": {
+					"defaultValue": "",
+					"type": "string"
+			},
+			"gfsip": {
+					"defaultValue": "",
+					"type": "string"
+			},
+			"license": {
+					"maxLength": 30,
+					"defaultValue": "0.0.0.0",
+					"type": "String",
+					"metadata": {
+							"description": "This is the IP address of the license server or POD key for the application. If license is unknown or not required simply enter 0.0.0.0, if a license is required, but unknown the application will not work"
+					}
+			},
+			"downloadModel": {
+					"defaultValue": "None",
+					"allowedValues": [
+							"None",
+							"ABAQUS_newStdPerf-1.tgz",
+							"ABAQUS_newStdPerf-2.tgz",
+							"ABAQUS_newStdPerf-3.tgz",
+							"ABAQUS_newStdPerf-4.tgz",
+							"ABAQUS_newXplPerf.tgz",
+							"ABAQUS_oldStdPerf.tgz",
+							"ANSYS_Fluent_aircraft_wing_14m.tar",
+							"ANSYS_Fluent_f1_racecar_140m.tar",
+							"ANSYS_Fluent_sedan_4m.tar",
+							"CCM_Civil.tgz",
+							"CCM_LeMans_17M.tgz",
+							"CCM_LeMans_100M.tgz",
+							"CCM_LeMans_514M.tgz",
+							"CCM_VTM_68M.tgz",
+							"CCM_VTM_178M.tgz"
+					],
+					"type": "String",
+					"metadata": {
+							"description": "Which benchmark model would you like to download, make sure to select the appropriate model for your solver"
+					}
 			}
-		},
-		"jumpboxSku": {
-			"defaultValue": "Standard_D3_v2",
-			"allowedValues": [
-				"Standard_D2_v2",
-				"Standard_D3_v2",
-				"Standard_D4_v2",
-				"Standard_D14_v2"
-			],
-			"type": "String",
-			"metadata": {
-				"description": "Which instance should be used for the jumpbox and ganglia web host?"
-			}
-		},
-		"vmSku": {
-			"defaultValue": "Standard_H16r",
-			"allowedValues": [
-				"Standard_A8",
-				"Standard_A9",
-				"Standard_H16r",
-				"Standard_H16mr",
-				"Standard_NC24r"
-			],
-			"type": "String",
-			"metadata": {
-				"description": "Which instance would you like to deploy to? Not all VMs are available in all regions"
-			}
-		},
-		"vmssName": {
-			"maxLength": 10,
-			"type": "String",
-			"metadata": {
-				"description": "String used as a base for naming resources. Must be 3-10 characters in length and globally unique across Azure. A hash is prepended to this string for some resources, and resource-specific information is appended."
-			}
-		},
-		"instanceCount": {
-			"maxValue": 300,
-			"type": "Int",
-			"metadata": {
-				"description": "Number of VM instances (100 or less)."
-			}
-		},
-		"adminUsername": {
-			"type": "String",
-			"metadata": {
-				"description": "Admin username on all VMs."
-			}
-		},
-		"rsaPublicKey": {
-			"type": "String",
-			"metadata": {
-				"description": "The RSA public key to access the headnode."
-			}
-		},
-		"vnetName": {
-			"defaultValue": "",
-			"type": "string"
-		},
-		"vnetResourceGroup": {
-			"defaultValue": "",
-			"type": "string"
-		},
-		"subnetName": {
-			"defaultValue": "",
-			"type": "string"
-		},
-		"gfsip": {
-			"defaultValue": "",
-			"type": "string"
-		},
-		"license": {
-			"maxLength": 30,
-			"defaultValue": "0.0.0.0",
-			"type": "String",
-			"metadata": {
-				"description": "This is the IP address of the license server or POD key for the application. If license is unknown or not required simply enter 0.0.0.0, if a license is required, but unknown the application will not work"
-			}
-		},
-		"downloadModel": {
-			"defaultValue": "None",
-			"allowedValues": [
-				"None",
-				"ABAQUS_newStdPerf-1.tgz",
-				"ABAQUS_newStdPerf-2.tgz",
-				"ABAQUS_newStdPerf-3.tgz",
-				"ABAQUS_newStdPerf-4.tgz",
-				"ABAQUS_newXplPerf.tgz",
-				"ABAQUS_oldStdPerf.tgz",
-				"ANSYS_Fluent_aircraft_wing_14m.tar",
-				"ANSYS_Fluent_f1_racecar_140m.tar",
-				"ANSYS_Fluent_sedan_4m.tar",
-				"CCM_Civil.tgz",
-				"CCM_LeMans_17M.tgz",
-				"CCM_LeMans_100M.tgz",
-				"CCM_LeMans_514M.tgz",
-				"CCM_VTM_68M.tgz",
-				"CCM_VTM_178M.tgz"			
-			],
-			"type": "String",
-			"metadata": {
-				"description": "Which benchmark model would you like to download, make sure to select the appropriate model for your solver"
-			}
-		}
 	},
 	"variables": {
-		"resourceLocation": "[resourceGroup().location]",
-		"resourceGroupName": "[resourceGroup().name]",
-		"namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
-		"longNamingInfix": "[toLower(parameters('vmssName'))]",
-		"jumpBoxName": "[concat(variables('longNamingInfix'),'-jb')]",
-		"vmssNameExt": "[concat(variables('longNamingInfix'),'vmss')]",
-		"jumpBoxDiskName": "[concat(variables('longNamingInfix'), '-disk')]",
-		"jumpBoxVHDContainerName": "[concat(variables('jumpBoxName'), 'vhd')]",
-		"jumpBoxIPConfigName": "[concat(variables('jumpBoxName'), 'ipconfig')]",
-		"jumpBoxNicName": "[concat(variables('longNamingInfix'), '-nic')]",
-		"storageAccountType": "Standard_LRS",
-		"ltsName": "[concat(variables('longNamingInfix'),'lts')]",
-		"vhdContainerName": "[concat(variables('namingInfix'), 'vhd')]",
-		"osDiskName":"[concat(variables('namingInfix'), 'osdisk')]",
-		"addressPrefix": "10.0.0.0/16",
-		"subnetPrefix": "10.0.0.0/24",
-		"vnetID": "[resourceId(parameters('vnetResourceGroup'),'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
-		"virtualNetworkName": "[resourceId(parameters('vnetResourceGroup'),'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
-		"subnetName": "compute-subnet",
-		"subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('subnetName'))]",
-		"publicIPAddressName": "[concat(variables('namingInfix'), '-pip')]",
-		"publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
-		"nicName": "[concat(variables('namingInfix'), '-nic')]",
-		"ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
-		"scriptUrl": "https://raw.githubusercontent.com/tanewill/AHOD-HPC/master/",
-		"cnSetupScript": "cn-setup.sh",
-		"hnSetupScript": "hn-setup.sh",
-		"osType": {
-			"publisher": "OpenLogic",
-			"offer": "CentOS-HPC",
-			"sku": "7.1",
-			"version": "7.1.20160408"
-		},
-		"imageReference": "[variables('osType')]",
-		"JBoxType": {
-			"publisher": "OpenLogic",
-			"offer": "CentOS",
-			"sku": "7.1",
-			"version": "latest"
-		},
-		"JBimageReference": "[variables('JBoxType')]",
-		"vmScripts": {
-			"scriptsToDownload": [
-				"[concat(variables('scriptUrl'), 'scripts/cn-setup_gfs.sh')]",
-				"[concat(variables('scriptUrl'), 'scripts/hn-setup_gfs.sh')]",
-				"[concat(variables('scriptUrl'), 'scripts/install_ganglia.sh')]",
-				"[concat(variables('scriptUrl'), 'scripts/clusRun.sh')]",
-				"[concat(variables('scriptUrl'), 'solvers/install-', parameters('solver'), '.sh')]"	
-			],
-			"commandToExecute": ""
-		},
-		"computeApiVersion": "2017-03-30",
-		"networkApiVersion": "2016-03-30",
-		"storageApiVersion": "2015-06-15"
+			"resourceLocation": "[resourceGroup().location]",
+			"resourceGroupName": "[resourceGroup().name]",
+			"namingInfix": "[toLower(substring(concat(parameters('vmssName'), uniqueString(resourceGroup().id)), 0, 9))]",
+			"longNamingInfix": "[toLower(parameters('vmssName'))]",
+			"jumpBoxName": "[concat(variables('longNamingInfix'),'-jb')]",
+			"vmssNameExt": "[concat(variables('longNamingInfix'),'vmss')]",
+			"jumpBoxDiskName": "[concat(variables('longNamingInfix'), '-disk')]",
+			"jumpBoxVHDContainerName": "[concat(variables('jumpBoxName'), 'vhd')]",
+			"jumpBoxIPConfigName": "[concat(variables('jumpBoxName'), 'ipconfig')]",
+			"jumpBoxNicName": "[concat(variables('longNamingInfix'), '-nic')]",
+			"storageAccountType": "Standard_LRS",
+			"ltsName": "[concat(variables('longNamingInfix'),'lts')]",
+			"vhdContainerName": "[concat(variables('namingInfix'), 'vhd')]",
+			"osDiskName":"[concat(variables('namingInfix'), 'osdisk')]",
+			"addressPrefix": "10.0.0.0/16",
+			"subnetPrefix": "10.0.0.0/24",
+			"vnetID": "[resourceId(parameters('vnetResourceGroup'),'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
+			"virtualNetworkName": "[resourceId(parameters('vnetResourceGroup'),'Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
+			"subnetName": "compute-subnet",
+			"subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+			"publicIPAddressName": "[concat(variables('namingInfix'), '-pip')]",
+			"publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
+			"nicName": "[concat(variables('namingInfix'), '-nic')]",
+			"ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
+			"scriptUrl": "https://raw.githubusercontent.com/tanewill/AHOD-HPC/master/",
+			"cnSetupScript": "cn-setup.sh",
+			"hnSetupScript": "hn-setup.sh",
+			"osType": {
+					"publisher": "OpenLogic",
+					"offer": "CentOS-HPC",
+					"sku": "7.1",
+					"version": "7.1.20160408"
+			},
+			"imageReference": "[variables('osType')]",
+			"JBoxType": {
+					"publisher": "OpenLogic",
+					"offer": "CentOS",
+					"sku": "7.1",
+					"version": "latest"
+			},
+			"JBimageReference": "[variables('JBoxType')]",
+			"vmScripts": {
+					"scriptsToDownload": [
+							"[concat(variables('scriptUrl'), 'scripts/cn-setup_gfs.sh')]",
+							"[concat(variables('scriptUrl'), 'scripts/hn-setup_gfs.sh')]",
+							"[concat(variables('scriptUrl'), 'scripts/install_ganglia.sh')]",
+							"[concat(variables('scriptUrl'), 'scripts/clusRun.sh')]",
+							"[concat(variables('scriptUrl'), 'solvers/install-', parameters('solver'), '.sh')]"
+					],
+					"commandToExecute": ""
+			},
+			"computeApiVersion": "2017-03-30",
+			"networkApiVersion": "2016-03-30",
+			"storageApiVersion": "2015-06-15"
 	},
 	"resources": [
 	{
-		"type": "Microsoft.Storage/storageAccounts",
-		"name": "[variables('ltsName')]",
-		"apiVersion": "[variables('storageApiVersion')]",
-		"location": "[variables('resourceLocation')]",
-		"properties": {
-			"accountType": "Standard_LRS"
-		}
-	},{
-		"type": "Microsoft.Network/publicIPAddresses",
-		"name": "[variables('publicIPAddressName')]",
-		"apiVersion": "[variables('networkApiVersion')]",
-		"location": "[variables('resourceLocation')]",
-		"properties": {
-			"publicIPAllocationMethod": "Dynamic",
-			"dnsSettings": {
-				"domainNameLabel": "[variables('longNamingInfix')]"
-			}
-		}
-	}, {
-		"type": "Microsoft.Network/networkInterfaces",
-		"name": "[variables('jumpBoxNicName')]",
-		"apiVersion": "[variables('networkApiVersion')]",
-		"location": "[variables('resourceLocation')]",
-		"properties": {
-			"ipConfigurations": [{
-				"name": "[variables('jumpBoxIPConfigName')]",
-				"properties": {
-					"privateIPAllocationMethod": "Dynamic",
-					"publicIPAddress": {
-						"id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
-					},
-					"subnet": {
-						"id": "[variables('subnetRef')]"
-					}
-				}
-			}]
-		},
-		"dependsOn": [
-			"[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
-		]
-	}, {
-		"type": "Microsoft.Compute/virtualMachines",
-		"name": "[variables('jumpBoxName')]",
-		"apiVersion": "[variables('computeApiVersion')]",
-		"location": "[variables('resourceLocation')]",
-		"properties": {
-			"hardwareProfile": {
-				"vmSize": "[parameters('jumpboxSku')]"
-			},
-			"osProfile": {
-				"computerName": "[variables('jumpBoxName')]",
-				"adminUsername": "[parameters('adminUsername')]",
-				"linuxConfiguration": {
-						"disablePasswordAuthentication": true,
-						"ssh": {
-							"publicKeys": [
-								{
-									"path": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
-									"keyData": "[parameters('rsaPublicKey')]"
-								}
-							]
-						}
-					}
-
-			},
-			"storageProfile": {
-				"imageReference": "[variables('JBimageReference')]",
-				"osDisk": {
-					"name": "[variables('jumpBoxDiskName')]",
-					"managedDisk": {
-						"storageAccountType": "Standard_LRS"
-					},
-					"createOption": "FromImage"
-				}
-			},
-			"networkProfile": {
-				"networkInterfaces": [{
-					"id": "[resourceId('Microsoft.Network/networkInterfaces',variables('jumpBoxNicName'))]"
-				}]
-			}
-		},
-		"resources": [{
-			"type": "extensions",
-			"name": "masterExtension",
+			"type": "Microsoft.Storage/storageAccounts",
+			"name": "[variables('ltsName')]",
 			"apiVersion": "[variables('storageApiVersion')]",
 			"location": "[variables('resourceLocation')]",
-			"tags": {
-				"displayName": "masterExtension"
-			},
 			"properties": {
-				"publisher": "Microsoft.OSTCExtensions",
-				"type": "CustomScriptForLinux",
-				"typeHandlerVersion": "1.5",
-				"autoUpgradeMinorVersion": true,
-				"settings": {
-					"fileUris": "[variables('vmScripts').scriptsToDownload]",
-					"commandToExecute": "[concat('bash ', 'hn-setup_gfs.sh ',parameters('solver'),' ',parameters('adminUsername'),' Azure@123456 ',parameters('downloadModel'),' ',parameters('license'),' ',parameters('gfsip'), ' > /dev/null 2>&1')]",
-					"timestamp": 4
-				}
+					"accountType": "Standard_LRS"
+			}
+	},{
+			"apiVersion": "2015-06-15",
+			"type": "Microsoft.Network/virtualNetworks/subnets",
+			"name": "[concat(parameters('vnetName'), '/',variables('subnetName'))]",
+			"location": "[resourceGroup().location]",
+			"properties": {
+					"addressPrefix": "[variables('subnetPrefix')]"
+			}
+	},{
+			"type": "Microsoft.Network/publicIPAddresses",
+			"name": "[variables('publicIPAddressName')]",
+			"apiVersion": "[variables('networkApiVersion')]",
+			"location": "[variables('resourceLocation')]",
+			"properties": {
+					"publicIPAllocationMethod": "Dynamic",
+					"dnsSettings": {
+							"domainNameLabel": "[variables('longNamingInfix')]"
+					}
+			}
+	}, {
+			"type": "Microsoft.Network/networkInterfaces",
+			"name": "[variables('jumpBoxNicName')]",
+			"apiVersion": "[variables('networkApiVersion')]",
+			"location": "[variables('resourceLocation')]",
+			"properties": {
+					"ipConfigurations": [{
+							"name": "[variables('jumpBoxIPConfigName')]",
+							"properties": {
+									"privateIPAllocationMethod": "Dynamic",
+									"publicIPAddress": {
+											"id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+									},
+									"subnet": {
+											"id": "[variables('subnetRef')]"
+									}
+							}
+					}]
 			},
 			"dependsOn": [
-				"[concat('Microsoft.Compute/virtualMachines/', variables('jumpBoxName'))]",
-				"[concat('Microsoft.Compute/virtualMachineScaleSets/',variables('vmssNameExt'))]"
+					"[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+					"[concat('Microsoft.Network/virtualNetworks/',parameters('vnetName'),'/subnets/', variables('subnetName'))]"
 			]
-		}],
-		"dependsOn": [
-			"[concat('Microsoft.Network/networkInterfaces/', variables('jumpBoxNicName'))]"
-		]
 	}, {
-		"type": "Microsoft.Compute/virtualMachineScaleSets",
-		"sku": {
-			"name": "[parameters('vmSku')]",
-			"tier": "Standard",
-			"capacity": "[parameters('instanceCount')]"
-		},
-		"name": "[variables('vmssNameExt')]",
-		"apiVersion": "[variables('computeApiVersion')]",
-		"location": "[variables('resourceLocation')]",
-		"properties": {
-			"overprovision": "true",
-			"upgradePolicy": {
-				"mode": "Manual"
-			},
-			"singlePlacementGroup": true,
-			
-			"virtualMachineProfile": {
-				"storageProfile": {
-					"imageReference": "[variables('imageReference')]",
-					"osDisk": {
-						"managedDisk": {
-							"storageAccountType": "Standard_LRS"
-						},
-						"createOption": "FromImage"
-					}
-				},
-				"osProfile": {
-					"computerNamePrefix": "[variables('namingInfix')]",
-					"adminUsername": "[parameters('adminUsername')]",
-					"adminPassword": "Azure@123456"
-				},
-				"networkProfile": {
-					"networkInterfaceConfigurations": [{
-						"name": "[variables('nicName')]",
-						"properties": {
-							"primary": "true",
-							"ipConfigurations": [{
-								"name": "[variables('ipConfigName')]",
-								"properties": {
-									"subnet": {
-				                                                "id": "[variables('subnetRef')]"
-                                				        }							
-								}
+			"type": "Microsoft.Compute/virtualMachines",
+			"name": "[variables('jumpBoxName')]",
+			"apiVersion": "[variables('computeApiVersion')]",
+			"location": "[variables('resourceLocation')]",
+			"properties": {
+					"hardwareProfile": {
+							"vmSize": "[parameters('jumpboxSku')]"
+					},
+					"osProfile": {
+							"computerName": "[variables('jumpBoxName')]",
+							"adminUsername": "[parameters('adminUsername')]",
+							"linuxConfiguration": {
+											"disablePasswordAuthentication": true,
+											"ssh": {
+													"publicKeys": [
+															{
+																	"path": "[concat('/home/',parameters('adminUsername'),'/.ssh/authorized_keys')]",
+																	"keyData": "[parameters('rsaPublicKey')]"
+															}
+													]
+											}
+									}
+
+					},
+					"storageProfile": {
+							"imageReference": "[variables('JBimageReference')]",
+							"osDisk": {
+									"name": "[variables('jumpBoxDiskName')]",
+									"managedDisk": {
+											"storageAccountType": "Standard_LRS"
+									},
+									"createOption": "FromImage"
+							}
+					},
+					"networkProfile": {
+							"networkInterfaces": [{
+									"id": "[resourceId('Microsoft.Network/networkInterfaces',variables('jumpBoxNicName'))]"
 							}]
-						}
-					}]
-				}
-			}
-		},
-		"dependsOn": [
-		]
+					}
+			},
+			"resources": [{
+					"type": "extensions",
+					"name": "masterExtension",
+					"apiVersion": "[variables('storageApiVersion')]",
+					"location": "[variables('resourceLocation')]",
+					"tags": {
+							"displayName": "masterExtension"
+					},
+					"properties": {
+							"publisher": "Microsoft.OSTCExtensions",
+							"type": "CustomScriptForLinux",
+							"typeHandlerVersion": "1.5",
+							"autoUpgradeMinorVersion": true,
+							"settings": {
+									"fileUris": "[variables('vmScripts').scriptsToDownload]",
+									"commandToExecute": "[concat('bash ', 'hn-setup_gfs.sh ',parameters('solver'),' ',parameters('adminUsername'),' Azure@123456 ',parameters('downloadModel'),' ',parameters('license'),' ',parameters('gfsip'), ' > /dev/null 2>&1')]",
+									"timestamp": 4
+							}
+					},
+					"dependsOn": [
+							"[concat('Microsoft.Compute/virtualMachines/', variables('jumpBoxName'))]",
+							"[concat('Microsoft.Compute/virtualMachineScaleSets/',variables('vmssNameExt'))]"
+					]
+			}],
+			"dependsOn": [
+					"[concat('Microsoft.Network/networkInterfaces/', variables('jumpBoxNicName'))]"
+			]
+	}, {
+			"type": "Microsoft.Compute/virtualMachineScaleSets",
+			"sku": {
+					"name": "[parameters('vmSku')]",
+					"tier": "Standard",
+					"capacity": "[parameters('instanceCount')]"
+			},
+			"name": "[variables('vmssNameExt')]",
+			"apiVersion": "[variables('computeApiVersion')]",
+			"location": "[variables('resourceLocation')]",
+			"properties": {
+					"overprovision": "true",
+					"upgradePolicy": {
+							"mode": "Manual"
+					},
+					"singlePlacementGroup": true,
+
+					"virtualMachineProfile": {
+							"storageProfile": {
+									"imageReference": "[variables('imageReference')]",
+									"osDisk": {
+											"managedDisk": {
+													"storageAccountType": "Standard_LRS"
+											},
+											"createOption": "FromImage"
+									}
+							},
+							"osProfile": {
+									"computerNamePrefix": "[variables('namingInfix')]",
+									"adminUsername": "[parameters('adminUsername')]",
+									"adminPassword": "Azure@123456"
+							},
+							"networkProfile": {
+									"networkInterfaceConfigurations": [{
+											"name": "[variables('nicName')]",
+											"properties": {
+													"primary": "true",
+													"ipConfigurations": [{
+															"name": "[variables('ipConfigName')]",
+															"properties": {
+																	"subnet": {
+																			"id": "[variables('subnetRef')]"
+																	}
+															}
+													}]
+											}
+									}]
+							}
+					}
+			},
+			"dependsOn": [
+			]
 	}]
 }
