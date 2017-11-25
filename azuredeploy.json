@@ -347,7 +347,7 @@
 					}
 			},
 			"dependsOn": [
-                "[concat('Microsoft.Network/virtualNetworks/subnets/',variables('subnetName'))]"
+                "[concat('Microsoft.Network/virtualNetworks/myvnet/subnets/',variables('subnetName'))]"
 			]
 	}]
 }
