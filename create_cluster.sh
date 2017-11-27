@@ -3,24 +3,30 @@
 
 RG=$1
 COMPNODES=$2
-NEWID=`uuidgen | cut -c 1-5`
+NEWID=`dbus-uuidgen | cut -c 1-5`
+LOC=northcentralus
+RUNDIR=`date +%Y%m%d_%H%M%S`_$RG
 user=azureuser
-rundir=`date +%Y%m%d_%H%M%S`_$RG
+
 #Size of GFS in TB
 GFSSIZE=4
+#GET SHIPYARD
+wget -O https://github.com/Azure/batch-shipyard/releases/download/3.0.1/batch-shipyard-3.0.1-cli-linux-x86_64.gz shipyard
+chmod +x shipyard
 
-mkdir -p $rundir
-cp -r scripts $rundir/
-cp *.yaml $rundir/
-cp *.json $rundir/
-cp create_cluster.sh $rundir/
-cd $rundir
+mkdir -p $RUNDIR
+cp -r scripts $RUNDIR/
+cp *.yaml $RUNDIR/
+cp *.json $RUNDIR/
+cp create_cluster.sh $RUNDIR/
+cd $RUNDIR
 ############################################
 
 cp fs.yaml .fs.yaml.orig
 echo ------------------------- `date +%F" "%T` Creating $RG using $NEWID 
 sed -i "s/_RGNAME/$RG/g" fs.yaml
 sed -i "s/_clustername/storage$NEWID/g" fs.yaml
+sed -i "s/_LOCACTION/$LOC/g" fs.yaml
 #sed -i "s/_privatekeyloc/$KEY/g" credentials.yaml
 start_time=`date +%F" "%T`
 
@@ -62,6 +68,6 @@ sudo sh -c "echo //$ltsName.file.core.windows.net/longtermstorage /mnt/lts cifs 
 EOSSH
 
 #REPORT OUT COMPUTEJB PUBLIC IP
-echo ------------------------- connect to jumpbox ssh azureuser@$jbpip
+echo ------------------------- connect to jumpbox ssh -i id_rsa_shipyard_remotefs azureuser@$jbpip
 echo ------------------------- start time $start_time
 echo -------------------------   end time `date +%F" "%T`

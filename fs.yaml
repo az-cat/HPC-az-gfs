@@ -1,6 +1,6 @@
 remote_fs:
   resource_group: _RGNAME 
-  location: northcentralus
+  location: _LOCACTION
   managed_disks:
     premium: true
     disk_size_gb: 1023
