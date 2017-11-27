@@ -25,12 +25,10 @@ To deploy an Infiniband enabled compute cluster with a Gluster File Server attac
 [The Cloud is Great for HPC](https://www.theregister.co.uk/2017/06/16/the_cloud_is_great_for_hpc_discuss/)
 		
 - Azure's play in the HPC space has been significant
-..* Infiniband enabled hardware
-[H-Series](https://azure.microsoft.com/en-us/blog/availability-of-h-series-vms-in-microsoft-azure/)
-Massive HPC deals at financial services institutions, Oil and Gas companies, etc.
-https://www.forbes.com/sites/alexkonrad/2017/10/30/chevron-partners-with-microsoft-in-cloud/
-Cray offering
-https://www.cray.com/solutions/supercomputing-as-a-service/cray-in-azure
+* Infiniband enabled hardware
+* [H-Series](https://azure.microsoft.com/en-us/blog/availability-of-h-series-vms-in-microsoft-azure/)
+* [Massive HPC deals at financial services institutions, Oil and Gas companies, etc](https://www.forbes.com/sites/alexkonrad/2017/10/30/chevron-partners-with-microsoft-in-cloud/)
+* [Cray offering](https://www.cray.com/solutions/supercomputing-as-a-service/cray-in-azure)
 		
 - Unlike traditional HPC environments, cloud HPC environments can be created and destroyed quickly, completely, and easily in an Ad-Hoc and On Demand fashon. With large physical disks, many storage requirments can be satisified using the attached physical disks.
 	
