@@ -12,7 +12,7 @@ user=azureuser
 GFSSIZE=4
 #GET SHIPYARD
 wget -O shipyard.gz https://github.com/Azure/batch-shipyard/releases/download/3.0.1/batch-shipyard-3.0.1-cli-linux-x86_64.gz
-gunzip shipyard.gz
+gunzip -f shipyard.gz
 chmod +x shipyard
 
 mkdir -p $RUNDIR

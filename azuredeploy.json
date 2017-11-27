@@ -269,24 +269,29 @@
 									"id": "[resourceId('Microsoft.Network/networkInterfaces',variables('jumpBoxNicName'))]"
 							}]
 					},
-					"extensionProfile":{
-						"extensions": [
-							{
-								"name": "configureJumpbox",
-								"properties": {
-									"publisher": "Microsoft.Azure.Extensions",
-									"type": "CustomScript",
-									"typeHandlerVersion": "2.0",
-									"autoUpgradeMinorVersion": true,
-									"settings": {
-										"fileUris": "[variables('vmScripts').scriptsToDownload]",
-										"commandToExecute": "[concat('bash ', 'hn-setup_gfs.sh ',parameters('solver'),' ',parameters('adminUsername'),' Azure@123456 ',parameters('downloadModel'),' ',parameters('license'),' ',parameters('gfsip'), ' > /dev/null 2>&1')]",
-										"timestamp": 1234
-									}
-								}
-							}
-						]
+			"resources":[{
+				"type": "extensions",
+				"name": "configureJumpbox",
+				"apiVersion": "[variables('computeApiVersion')]",
+				"location": "[variables('resourceLocation')]",
+				"tags": {
+					"displayName": "installHeadnodeExtension"
+				},
+				"properties": {
+					"publisher": "Microsoft.Azure.Extensions",
+					"type": "CustomScript",
+					"typeHandlerVersion": "2.0",
+					"autoUpgradeMinorVersion": true,
+					"settings": {
+						"fileUris": "[variables('vmScripts').scriptsToDownload]",
+						"commandToExecute": "[concat('bash ', 'hn-setup_gfs.sh ',parameters('solver'),' ',parameters('adminUsername'),' Azure@123456 ',parameters('downloadModel'),' ',parameters('license'),' ',parameters('gfsip'), ' > /dev/null 2>&1')]",
+						"timestamp": 1234
 					}
+				},
+				"dependsOn": [
+					"[concat('Microsoft.Compute/virtualMachines/', variables('jumpBoxName'))]"
+				]
+			}]
 			},
 			"dependsOn": [
 			    "[concat('Microsoft.Network/networkInterfaces/', variables('jumpBoxNicName'))]"

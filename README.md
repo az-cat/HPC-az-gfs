@@ -11,10 +11,10 @@ To deploy an Infiniband enabled compute cluster with a Gluster File Server attac
     Minimum required information link
 5. From inside of the cloned repository folder, run 
 ```shell
-chmod +x create_cluster.sh`
+chmod +x create_cluster.sh
 ./create_cluster [Resource Group name] [Compute nodes] [TB in GFS File Server]
+example: `./create_cluster.sh BTN-TEST-RG01 3 16`
 ```
-My example: `./create_cluster.sh BTN-TEST-RG01 3 16`
 6. At the completion of deployment you will be given an SSH string to access your cluster, change directories into the folder that was created for your Resource Group name and run the string.
 * My example: `ssh -i id_rsa_batchshipyardkey azureuser@23.45.67.89`
 
@@ -43,7 +43,7 @@ Inside of Azure the architecture is simple. For the compute cluster use an A9 or
 		
 #### Storage Architecture
 There are four different types of storage that will be used for this HPC cluster.
-Physically Attached Storage
+Physically Attached Storage as a *burst buffer*
 NFS Share from the jumpbox
 GFS Share from the storage cluster
 Azure Files share on the jumpbox
