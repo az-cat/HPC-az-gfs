@@ -13,8 +13,10 @@ To deploy an Infiniband enabled compute cluster with a Gluster File Server attac
 4. Update the Batch Shipyard RemoteFS credentials file with Service Principal Auth, link
     Minimum required information link
 5. From inside of the cloned repository folder, run 
-    `chmod +x create_cluster.sh`
-    `./create_cluster [Resource Group name] [Compute nodes] [TB in GFS File Server]`
+    ```shell
+    chmod +x create_cluster.sh`
+    ./create_cluster [Resource Group name] [Compute nodes] [TB in GFS File Server]
+    ```
         My example: `./create_cluster.sh BTN-TEST-RG01 3 16`
 6. At the completion of deployment you will be given an SSH string to access your cluster, change directories into the folder that was created for your Resource Group name and run the string.
     My example: `ssh -i id_rsa_batchshipyardkey azureuser@23.45.67.89`
