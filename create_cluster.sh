@@ -11,7 +11,8 @@ user=azureuser
 #Size of GFS in TB
 GFSSIZE=4
 #GET SHIPYARD
-wget -O https://github.com/Azure/batch-shipyard/releases/download/3.0.1/batch-shipyard-3.0.1-cli-linux-x86_64.gz shipyard
+wget -O shipyard.gz https://github.com/Azure/batch-shipyard/releases/download/3.0.1/batch-shipyard-3.0.1-cli-linux-x86_64.gz
+gunzip shipyard.gz
 chmod +x shipyard
 
 mkdir -p $RUNDIR
