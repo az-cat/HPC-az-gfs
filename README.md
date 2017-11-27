@@ -2,14 +2,11 @@
 The purpose of this repository is for a simple configuration of an HPC cluster inside of Azure with a Gluster File System configured and mounted. Gluster is deployed via Batch Shipyard.
 ![alt text](https://github.com/tanewill/azhpc_gfs/blob/master/support/azhpc_gfs_arch.png)
 
-## Purpose
-The purpose of this article is to provide an introduction to IaaS HPC and HPC storage in the cloud and to provide some useful tools and information to quickly setup an HPC cluster with four different types of storage.
-
 ## Quickstart
 To deploy an Infiniband enabled compute cluster with a Gluster File Server attached and mounted:
 1. Make sure you have quota for H-series (compute cluster) and F-series (jumpbox and storage cluster)
 2. Open the cloud shell from the Azure portal
-3. Git the repository, `git clone https://github.com/tanewill/azhpc_gfs`
+3. Clone the repository, `git clone https://github.com/tanewill/azhpc_gfs`
 4. Update the Batch Shipyard RemoteFS credentials file with Service Principal Auth, link
     Minimum required information link
 5. From inside of the cloned repository folder, run 
@@ -20,6 +17,10 @@ chmod +x create_cluster.sh`
 My example: `./create_cluster.sh BTN-TEST-RG01 3 16`
 6. At the completion of deployment you will be given an SSH string to access your cluster, change directories into the folder that was created for your Resource Group name and run the string.
 * My example: `ssh -i id_rsa_batchshipyardkey azureuser@23.45.67.89`
+
+
+## Purpose
+The purpose of this article is to provide an introduction to IaaS HPC and HPC storage in the cloud and to provide some useful tools and information to quickly setup an HPC cluster with four different types of storage.
 
 ## Introduction
 - HPC in the cloud continues to gain momentum. 
