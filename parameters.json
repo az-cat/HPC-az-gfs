@@ -15,7 +15,7 @@
 			"value": "_VMSSNAME"
 		},
 		"instanceCount": {
-			"value": 3
+			"value": _COMPNODES
 		},
 		"adminUsername": {
 			"value": "azureuser"

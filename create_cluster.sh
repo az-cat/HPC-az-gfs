@@ -2,6 +2,7 @@
 #set -x
 
 RG=$1
+COMPNODES=$2
 NEWID=`uuidgen | cut -c 1-5`
 user=azureuser
 rundir=`date +%Y%m%d_%H%M%S`_$RG
@@ -43,6 +44,7 @@ echo ------------------------- `date +%F" "%T` Creating Compute Cluster
 cp parameters.json .parameters.json.orig
 rsakey=`cat id_rsa_shipyard_remotefs.pub`
 sed -i "s/_VMSSNAME/comp$NEWID/g" parameters.json
+sed -i "s/_COMPNODES/$COMPNODES/g"
 sed -i "s/_RGNAME/$RG/g" parameters.json
 sed -i "s/_GFSIP/$nicprivip/g" parameters.json
 sed -i "s%_RSAKEY%$rsakey%g" parameters.json
