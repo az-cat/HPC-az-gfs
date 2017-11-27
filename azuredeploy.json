@@ -268,32 +268,26 @@
 							"networkInterfaces": [{
 									"id": "[resourceId('Microsoft.Network/networkInterfaces',variables('jumpBoxNicName'))]"
 							}]
+					},
+					"extensionProfile":{
+						"extensions": [
+							{
+								"name": "configureJumpbox",
+								"properties": {
+									"publisher": "Microsoft.Azure.Extensions",
+									"type": "CustomScript",
+									"typeHandlerVersion": "2.0",
+									"autoUpgradeMinorVersion": true,
+									"settings": {
+										"fileUris": "[variables('vmScripts').scriptsToDownload]",
+										"commandToExecute": "[concat('bash ', 'hn-setup_gfs.sh ',parameters('solver'),' ',parameters('adminUsername'),' Azure@123456 ',parameters('downloadModel'),' ',parameters('license'),' ',parameters('gfsip'), ' > /dev/null 2>&1')]",
+										"timestamp": 1234
+									}
+								}
+							}
+						]
 					}
 			},
-			"resources": [{
-					"type": "extensions",
-					"name": "masterExtension",
-					"apiVersion": "[variables('storageApiVersion')]",
-					"location": "[variables('resourceLocation')]",
-					"tags": {
-							"displayName": "masterExtension"
-					},
-					"properties": {
-							"publisher": "Microsoft.OSTCExtensions",
-							"type": "CustomScriptForLinux",
-							"typeHandlerVersion": "1.5",
-							"autoUpgradeMinorVersion": true,
-							"settings": {
-									"fileUris": "[variables('vmScripts').scriptsToDownload]",
-									"commandToExecute": "[concat('bash ', 'hn-setup_gfs.sh ',parameters('solver'),' ',parameters('adminUsername'),' Azure@123456 ',parameters('downloadModel'),' ',parameters('license'),' ',parameters('gfsip'), ' > /dev/null 2>&1')]",
-									"timestamp": 4
-							}
-					},
-					"dependsOn": [
-							"[concat('Microsoft.Compute/virtualMachines/', variables('jumpBoxName'))]",
-							"[concat('Microsoft.Compute/virtualMachineScaleSets/',variables('vmssNameExt'))]"
-					]
-			}],
 			"dependsOn": [
 			    "[concat('Microsoft.Network/networkInterfaces/', variables('jumpBoxNicName'))]"
 			]

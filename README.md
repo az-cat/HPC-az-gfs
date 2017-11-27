@@ -18,7 +18,6 @@ My example: `./create_cluster.sh BTN-TEST-RG01 3 16`
 6. At the completion of deployment you will be given an SSH string to access your cluster, change directories into the folder that was created for your Resource Group name and run the string.
 * My example: `ssh -i id_rsa_batchshipyardkey azureuser@23.45.67.89`
 
-
 ## Purpose
 The purpose of this article is to provide an introduction to IaaS HPC and HPC storage in the cloud and to provide some useful tools and information to quickly setup an HPC cluster with four different types of storage.
 
