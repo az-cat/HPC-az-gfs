@@ -154,7 +154,7 @@
 			"nicName": "[concat(variables('namingInfix'), '-nic')]",
 			"ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
 			"scriptUrl": "https://raw.githubusercontent.com/tanewill/AHOD-HPC/master/",
-			"gfsScriptUrl": "https://raw.githubusercontent.com/tanewill/azhpc_gfs/master",
+			"gfsScriptUrl": "https://raw.githubusercontent.com/tanewill/azhpc_gfs/master/",
 			"osType": {
 					"publisher": "OpenLogic",
 					"offer": "CentOS-HPC",
