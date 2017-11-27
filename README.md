@@ -11,7 +11,6 @@ To deploy an Infiniband enabled compute cluster with a Gluster File Server attac
     Minimum required information link
 5. From inside of the cloned repository folder, run 
 ```shell
-chmod +x create_cluster.sh
 ./create_cluster [Resource Group name] [Compute nodes] [TB in GFS File Server]
 example: `./create_cluster.sh BTN-TEST-RG01 3 16`
 ```

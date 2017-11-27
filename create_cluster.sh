@@ -69,6 +69,7 @@ sudo sh -c "echo //$ltsName.file.core.windows.net/longtermstorage /mnt/lts cifs 
 EOSSH
 
 #REPORT OUT COMPUTEJB PUBLIC IP
+cd $RUNDIR
 echo ------------------------- connect to jumpbox ssh -i id_rsa_shipyard_remotefs azureuser@$jbpip
 echo ------------------------- start time $start_time
 echo -------------------------   end time `date +%F" "%T`
