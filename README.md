@@ -5,8 +5,8 @@ The purpose of this repository is for a simple configuration of an HPC cluster i
 
 ## Quickstart
 To deploy an Infiniband enabled compute cluster with a Gluster File Server attached and mounted:
-- [ ]  Make sure you have quota for H-series (compute cluster) and F-series (jumpbox and storage cluster)
-- [ ] Open the cloud shell from the Azure portal
+1. Make sure you have quota for H-series (compute cluster) and F-series (jumpbox and storage cluster)
+2. Open the cloud shell from the Azure portal
 3. Clone the repository, `git clone https://github.com/tanewill/azhpc_gfs`
 4. Update the Batch Shipyard RemoteFS credentials file with Service Principal Auth, [required entries](https://github.com/tanewill/azhpc_gfs/blob/master/credentials.yaml)
 5. From inside of the cloned repository folder, run 
@@ -59,20 +59,20 @@ After the file server is created the compute cluster is created in a seperate su
 Finally the azuredeploy.json template creates an Azure Files Storage Account which will be used for long term storage. After the ARM template has been fully deployed the create_cluster.sh script is used to get the storage account keys and then mount the storage account to the jumpbox.
     
 ### Tools
-* Scripts
+#### Scripts
   Three scripts are used for the deployment of this repository, unlike many ARM templates, this template is not designed to be run independantly. It has been designed to be deployed in connection with other features called in the `create_cluster.sh` script. `create_cluster.sh` is the master script, it downloads Batch Shipyard, deploys a storage file server, a compute cluster, and then mounts Azure Files.
 
-  The `azuredeploy.json` ARM template calls the scrips that are located in the `scripts` directory. The two scripts are used for the configuration of the head node and the compute nodes. They are designed to be used when there is a Gluster File Server inside of the VNET that the template is deployed in.
-* ARM Template
+  The `azuredeploy.json` ARM template calls the two scripts that are located in the `scripts` directory. These scripts are used for the configuration of the head node and the compute nodes. They are designed to be used when there is a Gluster File Server inside of the VNET that the template is deployed in.
+#### ARM Template
   - Parameters.json
   - Placement Groups
-* Data transfer tools
+#### Data transfer tools
   - Fast Data Transfer Tool
   - Blobxfer
   - SCP
-* Batch Shipyard
+#### Batch Shipyard
   - Remote File Server
-* Gluster 
+#### Gluster 
 
 ### Configuration
 Credentials
