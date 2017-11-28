@@ -7,8 +7,16 @@ remote_fs:
     disk_names:
     - p30-disk0a
     - p30-disk1a
+    - p30-disk2a
+    - p30-disk3a
+    - p30-disk4a
+    - p30-disk5a
     - p30-disk0b
     - p30-disk1b
+    - p30-disk2b
+    - p30-disk3b
+    - p30-disk4b
+    - p30-disk5b
   storage_clusters:
     mystoragecluster:
       hostname_prefix: _clustername 
@@ -46,12 +54,20 @@ remote_fs:
           disk_array:
           - p30-disk0a
           - p30-disk1a
+          - p30-disk2a
+          - p30-disk3a
+          - p30-disk4a
+          - p30-disk5a
           filesystem: btrfs
           raid_level: 0
         '1':
           disk_array:
           - p30-disk0b
           - p30-disk1b
+          - p30-disk2b
+          - p30-disk3b
+          - p30-disk4b
+          - p30-disk5b
           filesystem: btrfs
           raid_level: 0
 
