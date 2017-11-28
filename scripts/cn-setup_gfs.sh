@@ -13,7 +13,6 @@ GFSIP=$4
 HOST=`hostname`
 if grep -q $IPPRE /etc/fstab; then FLAG=MOUNTED; else FLAG=NOTMOUNTED; fi
 
-
 if [ $FLAG = NOTMOUNTED ] ; then 
     echo $FLAG
     echo installing NFS and mounting
@@ -43,7 +42,7 @@ if [ $FLAG = NOTMOUNTED ] ; then
     mount -a
     df -h
 
-
+    #SET ENV VARS
     cat << EOF >> /home/$USER/.bashrc
         if [ -d "/opt/intel/impi" ]; then
             source /opt/intel/impi/*/bin64/mpivars.sh
@@ -54,25 +53,15 @@ if [ $FLAG = NOTMOUNTED ] ; then
         export I_MPI_FABRICS=shm:dapl
         export I_MPI_DAPL_PROVIDER=ofa-v2-ib0
         export I_MPI_DYNAMIC_CONNECTION=0
+        #export I_MPI_DAPL_TRANSLATION_CACHE=0 only un comment if you are having application stability issues
+        #export I_MPI_PIN_PROCESSOR=8 
 EOF
-        #SET ENV VARS
-#    echo e xport FLUENT_HOSTNAME=$HOST >> /home/$USER/.bashrc
-#    echo  >> /home/$USER/.bashrc
-#    echo export I_MPI_FABRICS=shm:dapl >> /home/$USER/.bashrc
-#    echo export I_MPI_DAPL_PROVIDER=ofa-v2-ib0 >> /home/$USER/.bashrc
-#    echo export I_MPI_ROOT=/opt/intel/compilers_and_libraries_2016.2.181/linux/mpi >> /home/$USER/.bashrc
-#    echo export MPI_ROOT=$I_MPI_ROOT >> /home/$USER/.bashrc
-#    echo export PATH=/opt/intel/impi/${impi_version}/bin64:$PATH >> /home/$USER/.bashrc
-
-#    echo #export I_MPI_PIN_PROCESSOR=8 >> /home/$USER/.bashrc
-#    echo #export I_MPI_DAPL_TRANSLATION_CACHE=0 only un comment if you are having application stability issues >> /home/$USER/.bashrc
     
     #chown -R $USER:$USER /mnt/
     wget -q https://raw.githubusercontent.com/tanewill/AHOD-HPC/master/scripts/full-pingpong.sh -O /home/$USER/full-pingpong.sh
     wget -q https://raw.githubusercontent.com/tanewill/AHOD-HPC/master/scripts/install_ganglia.sh -O /home/$USER/install_ganglia.sh
     chmod +x /home/$USER/install_ganglia.sh
     sh /home/$USER/install_ganglia.sh $GANG_HOST azure 8649
-
 
     chmod +x /home/$USER/full-pingpong.sh
     chown $USER:$USER /home/$USER/full-pingpong.sh

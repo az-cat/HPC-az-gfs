@@ -36,7 +36,6 @@ mkdir -p /mnt/gfs1
 mkdir -p /mnt/gfs2
 mkdir -p /mnt/gfs3
 
-
 ln -s /mnt/scratch/ /home/$USER/scratch
 ln -s /mnt/gfs /home/$USER/gfs
 ln -s /mnt/lts /home/$USER/lts
@@ -73,7 +72,6 @@ systemctl start nfs-idmap
 systemctl restart nfs-server
 mount -a
 
-
 mv clusRun.sh cn-setup_gfs.sh /home/$USER/bin
 chmod +x /home/$USER/bin/*.sh
 chown $USER:$USER /home/$USER/bin
@@ -109,8 +107,6 @@ for name in `cat /home/$USER/bin/hostips`; do
         cat /home/$USER/bin/cn-setup_gfs.sh | sshpass -p "$PASS" ssh $USER@$name "cat >> /home/$USER/cn-setup_gfs.sh"
         sshpass -p $PASS ssh -t -t -o ConnectTimeout=2 $USER@$name 'echo "'$PASS'" | sudo -S sh /home/'$USER'/cn-setup_gfs.sh '$IP $USER $myhost $GFSIP & > /dev/null 2>&1
 done
-
-
 
 cp /home/$USER/bin/hosts /mnt/scratch/hosts
 chown -R $USER:$USER /home/
