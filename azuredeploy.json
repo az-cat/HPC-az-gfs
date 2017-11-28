@@ -268,9 +268,9 @@
 							"networkInterfaces": [{
 									"id": "[resourceId('Microsoft.Network/networkInterfaces',variables('jumpBoxNicName'))]"
 							}]
-					},
-			"resources":[{
-				"type": "extensions",
+					}
+				},
+			"resources":[{ "type": "extensions",
 				"name": "configureJumpbox",
 				"apiVersion": "[variables('computeApiVersion')]",
 				"location": "[variables('resourceLocation')]",
@@ -291,8 +291,7 @@
 				"dependsOn": [
 					"[concat('Microsoft.Compute/virtualMachines/', variables('jumpBoxName'))]"
 				]
-			}]
-			},
+			}],
 			"dependsOn": [
 			    "[concat('Microsoft.Network/networkInterfaces/', variables('jumpBoxNicName'))]"
 			]
