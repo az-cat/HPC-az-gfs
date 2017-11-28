@@ -21,7 +21,7 @@ if [ $FLAG = NOTMOUNTED ] ; then
     yum groupinstall -y -q "X Window System"
 
     mkdir -p /mnt/nfsshare
-    mkdir -p /mnt/resource/scratch
+    mkdir -p /mnt/scratch
     mkdir -p /mnt/gfs/
     mkdir -p /mnt/lts/
 
@@ -37,7 +37,7 @@ if [ $FLAG = NOTMOUNTED ] ; then
     systemctl start nfs-idmap
     localip=`hostname -i | cut --delimiter='.' -f -3`
     echo "$IPPRE:/mnt/nfsshare    /mnt/nfsshare   nfs defaults 0 0" | tee -a /etc/fstab
-    echo "$IPPRE:/mnt/resource/scratch    /mnt/resource/scratch   nfs defaults 0 0" | tee -a /etc/fstab
+    echo "$IPPRE:/mnt/scratch    /mnt/scratch   nfs defaults 0 0" | tee -a /etc/fstab
     echo "$GFSIP:/gv0       /mnt/gfs  glusterfs   defaults,_netdev  0  0" | tee -a /etc/fstab
 
     mount -a
@@ -67,7 +67,7 @@ EOF
 #    echo #export I_MPI_PIN_PROCESSOR=8 >> /home/$USER/.bashrc
 #    echo #export I_MPI_DAPL_TRANSLATION_CACHE=0 only un comment if you are having application stability issues >> /home/$USER/.bashrc
     
-    #chown -R $USER:$USER /mnt/resource/
+    #chown -R $USER:$USER /mnt/
     wget -q https://raw.githubusercontent.com/tanewill/AHOD-HPC/master/scripts/full-pingpong.sh -O /home/$USER/full-pingpong.sh
     wget -q https://raw.githubusercontent.com/tanewill/AHOD-HPC/master/scripts/install_ganglia.sh -O /home/$USER/install_ganglia.sh
     chmod +x /home/$USER/install_ganglia.sh
@@ -77,7 +77,7 @@ EOF
     chmod +x /home/$USER/full-pingpong.sh
     chown $USER:$USER /home/$USER/full-pingpong.sh
 
-    ln -s /mnt/resource/scratch/ /home/$USER/scratch
+    ln -s /mnt/scratch/ /home/$USER/scratch
     ln -s /mnt/gfs/ /home/$USER/gfs
     ln -s /mnt/lts/ /home/$USER/lts
 

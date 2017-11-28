@@ -39,11 +39,11 @@ The purpose of this article is to provide an introduction to IaaS HPC and HPC st
 ## Process
 ### Architecture
 #### Storage Deployment
-There are four different types of storage that will be used for this HPC cluster. 
+There are four different types of storage that will be used for this HPC cluster. Using the default configuration there is over 33TB available for this compute cluster.
 - Physically Attached Storage as a *burst buffer*, located at `/mnt/resource` on each node
-- NFS shared from the jumpbox and located at `/mnt/resource/scratch`, created in the hn-setup script here: [hn-setup_gfs.sh](https://github.com/tanewill/azhpc_gfs/blob/master/script/hn-setup_gfs.sh#L58-L72)
+- NFS shared from the jumpbox and located at `/mnt/scratch`, created in the hn-setup script here: [hn-setup_gfs.sh](https://github.com/tanewill/azhpc_gfs/blob/master/script/hn-setup_gfs.sh#L58-L72)
 - GFS shared from the storage cluster mounted at `/mnt/gfs`, created using Batch Shipyard, [link](http://batch-shipyard.readthedocs.io/en/latest/65-batch-shipyard-remote-fs/), here in [create_cluster.sh](https://github.com/tanewill/azhpc_gfs/blob/master/create_cluster.sh#L34-L39)
-- Azure Files share mounted to the jumpbox, the size can be altered by increasing the quota here: [create_cluster.sh](https://github.com/tanewill/azhpc_gfs/blob/master/create_cluster.sh#L66)
+- Three 5TB Azure Files shares mounted to the jumpbox at `/mnt/lts1`,`/mnt/lts2`,`/mnt/lts3`. This is a CIFS share and can be mounted to both the Windows and Linux operating systems. These Azure File shares are subject to performance limits specified [here](https://docs.microsoft.com/en-us/azure/azure-subscription-service-limits#azure-files-limits). The size can be altered by increasing the quota here: [create_cluster.sh](https://github.com/tanewill/azhpc_gfs/blob/master/create_cluster.sh#L66)
 
 Below is an image that attempts to visualize the needed storage structure for an example workload. The Physically attached storage is the temporary storage, the GFS is for the 'campaign' data that supports multiple workloads, finally the Azure Files share is for long term data retention.
 
@@ -62,7 +62,8 @@ Finally the azuredeploy.json template creates an Azure Files Storage Account whi
 #### Scripts
   Three scripts are used for the deployment of this repository, unlike many ARM templates, this template is not designed to be run independantly. It has been designed to be deployed in connection with other features called in the `create_cluster.sh` script. `create_cluster.sh` is the master script, it downloads Batch Shipyard, deploys a storage file server, a compute cluster, and then mounts Azure Files.
 
-  The `azuredeploy.json` ARM template calls the two scripts that are located in the `scripts` directory. These scripts are used for the configuration of the head node and the compute nodes. They are designed to be used when there is a Gluster File Server inside of the VNET that the template is deployed in.
+  The `azuredeploy.json` ARM template calls the two scripts that are located in the `scripts` directory. These scripts are used for the configuration of the head node [hn-setup_gfs.sh](https://github.com/tanewill/azhpc_gfs/blob/master/scripts/hn-setup_gfs.sh) and the compute nodes [cn-setup_gfs.sh](https://github.com/tanewill/azhpc_gfs/blob/master/scripts/cn-setup_gfs.sh). They are designed to be used when there is a Gluster File Server inside of the VNET that the template is deployed in.
+
 #### ARM Template
   - Parameters.json
   - Placement Groups

@@ -63,9 +63,11 @@ jbpipid=`az network nic show -g $RG -n $jbnicname --query [ipConfigurations[0].p
 jbpip=`az resource show --ids $jbpipid --query [properties.ipAddress] -o tsv`
 ltsName=`az storage account list --resource-group $RG --query [0].[name] -o tsv`
 ltsKey=`az storage account keys list --resource-group $RG --account-name $ltsName --query '[0].{Key:value}' --output tsv`
-az storage share create --name longtermstorage --quota 500 --account-name $ltsName --account-key $ltsKey
+az storage share create --name longtermstorageone --quota 5000 --account-name $ltsName --account-key $ltsKey
+az storage share create --name longtermstoragetwo --quota 5000 --account-name $ltsName --account-key $ltsKey
+az storage share create --name longtermstoragethree --quota 5000 --account-name $ltsName --account-key $ltsKey
 ssh -T -i id_rsa_shipyard_remotefs $user@$jbpip << EOSSH
-sudo sh -c "echo //$ltsName.file.core.windows.net/longtermstorage /mnt/lts cifs vers=3.0,username=$ltsName,password=$ltsKey,dir_mode=0777,file_mode=0777 | tee -a /etc/fstab && mount -a"
+sudo sh -c "mkdir /mnt/lts1 && mkdir /mnt/lts2 && mkdir /mnt/lts3 && echo //$ltsName.file.core.windows.net/longtermstorageone /mnt/lts1 cifs vers=3.0,username=$ltsName,password=$ltsKey,dir_mode=0777,file_mode=0777 | tee -a /etc/fstab && echo //$ltsName.file.core.windows.net/longtermstoragetwo /mnt/lts2 cifs vers=3.0,username=$ltsName,password=$ltsKey,dir_mode=0777,file_mode=0777 | tee -a /etc/fstab && echo //$ltsName.file.core.windows.net/longtermstoragethree /mnt/lts3 cifs vers=3.0,username=$ltsName,password=$ltsKey,dir_mode=0777,file_mode=0777 | tee -a /etc/fstab && mount -a"
 EOSSH
 
 #REPORT OUT COMPUTEJB PUBLIC IP

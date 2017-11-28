@@ -28,14 +28,16 @@ EOF
 #Create directories needed for configuration
 mkdir -p /home/$USER/.ssh
 mkdir -p /home/$USER/bin
-mkdir -p /mnt/resource/scratch/applications
-mkdir -p /mnt/resource/scratch/INSTALLERS
-mkdir -p /mnt/resource/scratch/benchmark
+mkdir -p /mnt/scratch/applications
+mkdir -p /mnt/scratch/INSTALLERS
+mkdir -p /mnt/scratch/benchmark
 mkdir -p /mnt/lts
-mkdir -p /mnt/gfs
+mkdir -p /mnt/gfs1
+mkdir -p /mnt/gfs2
+mkdir -p /mnt/gfs3
 
 
-ln -s /mnt/resource/scratch/ /home/$USER/scratch
+ln -s /mnt/scratch/ /home/$USER/scratch
 ln -s /mnt/gfs /home/$USER/gfs
 ln -s /mnt/lts /home/$USER/lts
 
@@ -57,7 +59,7 @@ chmod +x install_ganglia.sh
 
 #sudo mount -t cifs //myStorageAccount.file.core.windows.net/mystorageshare /mnt/mymountdirectory -o vers=3.0,username=mystorageaccount,password=mystorageaccountkey,dir_mode=0777,file_mode=0777
 #Setup the NFS server, mount the gluster, get Long Term Storage Keys
-echo "/mnt/resource/scratch $localip.*(rw,sync,no_root_squash,no_all_squash)" | tee -a /etc/exports
+echo "/mnt/scratch $localip.*(rw,sync,no_root_squash,no_all_squash)" | tee -a /etc/exports
 echo "$GFSIP:/gv0       /mnt/gfs  glusterfs   defaults,_netdev  0  0" | tee -a /etc/fstab
 
 systemctl enable rpcbind
@@ -110,11 +112,11 @@ done
 
 
 
-cp /home/$USER/bin/hosts /mnt/resource/scratch/hosts
+cp /home/$USER/bin/hosts /mnt/scratch/hosts
 chown -R $USER:$USER /home/
 chown -R $USER:$USER /mnt/
 
-chmod -R 744 /mnt/resource/scratch/
+chmod -R 744 /mnt/scratch/
 
 # Don't require password for HPC user sudo
 echo "$USER ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
