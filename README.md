@@ -16,7 +16,7 @@ To deploy an Infiniband enabled compute cluster with a Gluster File Server attac
 * Example: `./create_cluster.sh BTN-TEST-RG01 3 16`
 
 6. At the completion of deployment you will be given an SSH string to access your cluster, change directories into the folder that was created for your Resource Group name and run the string.
-* My example: `ssh -i id_rsa_batchshipyardkey azureuser@23.45.67.89`
+* Example: `ssh -i id_rsa_batchshipyardkey azureuser@23.45.67.89`
 
 ## Purpose
 The purpose of this article is to provide an introduction to IaaS HPC and HPC storage in the cloud and to provide some useful tools and information to quickly setup an HPC cluster with four different types of storage.
@@ -42,11 +42,11 @@ The purpose of this article is to provide an introduction to IaaS HPC and HPC st
 Inside of Azure the architecture is simple. For the compute cluster use an A9 or H16r/H16mr Virtual Machine Scale Set (VMSS). The nodes are automatically deployed in a single placement group and are connected via Infiniband hardware. VMSS do not have external or public-ips, so if you are creating a new VNET when you create your HPC cluster you will also need to add a 'jumpbox' this box is not the cluster headnode or rank 0, it is simply a way to access your VMSS. A small VM SKU will suffice.
 		
 #### Storage Architecture
-There are four different types of storage that will be used for this HPC cluster.
-Physically Attached Storage as a *burst buffer*
-NFS Share from the jumpbox
-GFS Share from the storage cluster
-Azure Files share on the jumpbox
+There are four different types of storage that will be used for this HPC cluster. 
+- Physically Attached Storage as a *burst buffer*, located at /mnt/resource on each node
+- NFS Share from the jumpbox, created in the hn-setup script here: [hn-setup_gfs.sh](https://github.com/tanewill/azhpc_gfs/blob/master/script/hn-setup_gfs.sh#L58-L72)
+- GFS Share from the storage cluster, created using Batch Shipyard, [link](http://batch-shipyard.readthedocs.io/en/latest/65-batch-shipyard-remote-fs/), here in [create_cluster.sh](https://github.com/tanewill/azhpc_gfs/blob/master/create_cluster.sh#L34-L39)
+- Azure Files share mounted to the jumpbox, the size can be altered by increasing the quota here: [create_cluster.sh](https://github.com/tanewill/azhpc_gfs/blob/master/create_cluster.sh#L66)
     
 ### Tools
 Create Cluster script
