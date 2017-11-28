@@ -58,7 +58,7 @@ After the file server is created the compute cluster is created in a seperate su
 Finally the azuredeploy.json template creates an Azure Files Storage Account which will be used for long term storage. After the ARM template has been fully deployed the create_cluster.sh script is used to get the storage account keys and then mount the storage account to the jumpbox.
     
 ### Tools
-- ARM Template
+* ARM Template
 ⋅⋅* Parameters.json
 ⋅⋅* Placement Groups
 * Data transfer tools
