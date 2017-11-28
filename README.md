@@ -60,19 +60,19 @@ Finally the azuredeploy.json template creates an Azure Files Storage Account whi
     
 ### Tools
 * ARM Template
-⋅⋅⋅Parameters.json
-⋅⋅⋅Placement Groups
+    ⋅⋅⋅Parameters.json
+    ⋅⋅⋅Placement Groups
 * Data transfer tools
-⋅⋅⋅Fast Data Transfer Tool
-⋅⋅⋅Blobxfer
-⋅⋅⋅SCP
+    ⋅⋅⋅Fast Data Transfer Tool
+    ⋅⋅⋅Blobxfer
+    ⋅⋅⋅SCP
 * Batch Shipyard
-⋅⋅⋅Remote File Server
+    ⋅⋅⋅Remote File Server
 * Gluster
 * Scripts
-⋅⋅⋅Create Cluster script
-⋅⋅⋅Head node setup script
-⋅⋅⋅Compute node setup script  
+    ⋅⋅⋅Create Cluster script
+    ⋅⋅⋅Head node setup script
+    ⋅⋅⋅Compute node setup script  
 
 ### Configuration
 Credentials
