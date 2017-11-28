@@ -59,6 +59,10 @@ After the file server is created the compute cluster is created in a seperate su
 Finally the azuredeploy.json template creates an Azure Files Storage Account which will be used for long term storage. After the ARM template has been fully deployed the create_cluster.sh script is used to get the storage account keys and then mount the storage account to the jumpbox.
     
 ### Tools
+* Scripts
+  Three scripts are used for the deployment of this repository, unlike many ARM templates, this template is not designed to be run independantly. It has been designed to be deployed in connection with other features called in the `create_cluster.sh` script. `create_cluster.sh` is the master script, it downloads Batch Shipyard, deploys a storage file server, a compute cluster, and then mounts Azure Files.
+
+  The `azuredeploy.json` ARM template calls the scrips that are located in the `scripts` directory. The two scripts are used for the configuration of the head node and the compute nodes. They are designed to be used when there is a Gluster File Server inside of the VNET that the template is deployed in.
 * ARM Template
   - Parameters.json
   - Placement Groups
@@ -68,11 +72,7 @@ Finally the azuredeploy.json template creates an Azure Files Storage Account whi
   - SCP
 * Batch Shipyard
   - Remote File Server
-* Gluster
-* Scripts
-  - Create Cluster script
-  - Head node setup script
-  - Compute node setup script  
+* Gluster 
 
 ### Configuration
 Credentials
