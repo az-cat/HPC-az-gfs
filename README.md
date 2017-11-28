@@ -46,6 +46,7 @@ There are four different types of storage that will be used for this HPC cluster
 - Azure Files share mounted to the jumpbox, the size can be altered by increasing the quota here: [create_cluster.sh](https://github.com/tanewill/azhpc_gfs/blob/master/create_cluster.sh#L66)
 
 Below is an image that attempts to visualize the needed storage structure for an example workload. The Physically attached storage is the temporary storage, the GFS is for the 'campaign' data that supports multiple workloads, finally the Azure Files share is for long term data retention.
+
 ![alt text](https://github.com/tanewill/azhpc_gfs/blob/master/support/workload_storage_movement.png)
 
 In the deployment process the GFS file server is created first using Batch Shipyard. The latest Batch Shipyard binary is downloaded and the file server is created based on the credentials in credentials.yaml and the configuration definitions in fs.yaml and configuration.yaml. Please refer to the Batch Shipyard documentation for more information about these files. For the deployment of the file server a resource group is created and then the managed disks that are defined in fs.yaml are created. The next step creates the virtual network, subnet, and nodes that are used for the file server. The managed disks are then attached to the file server nodes. By default an F8 VM is used as the file server with 12 p30 managed disks for 12 TB of storage using a distributed, RAID 0 configuration, that can be altered in the fs.yaml file. You can refer to [this Azure website](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes-compute) for information about how many disks can be attached to different VM sizes.
@@ -59,19 +60,19 @@ Finally the azuredeploy.json template creates an Azure Files Storage Account whi
     
 ### Tools
 * ARM Template
-⋅⋅* Parameters.json
-⋅⋅* Placement Groups
+⋅⋅⋅Parameters.json
+⋅⋅⋅Placement Groups
 * Data transfer tools
-⋅⋅* Fast Data Transfer Tool
-⋅⋅* Blobxfer
-⋅⋅* SCP
+⋅⋅⋅Fast Data Transfer Tool
+⋅⋅⋅Blobxfer
+⋅⋅⋅SCP
 * Batch Shipyard
-⋅⋅* Remote File Server
+⋅⋅⋅Remote File Server
 * Gluster
 * Scripts
-⋅⋅* Create Cluster script
-⋅⋅* Head node setup script
-⋅⋅* Compute node setup script  
+⋅⋅⋅Create Cluster script
+⋅⋅⋅Head node setup script
+⋅⋅⋅Compute node setup script  
 
 ### Configuration
 Credentials
