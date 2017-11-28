@@ -49,14 +49,21 @@ There are four different types of storage that will be used for this HPC cluster
 - Azure Files share mounted to the jumpbox, the size can be altered by increasing the quota here: [create_cluster.sh](https://github.com/tanewill/azhpc_gfs/blob/master/create_cluster.sh#L66)
     
 ### Tools
-Create Cluster script
-ARM Template
-Parameters.json
-Placement Groups
-Batch Shipyard Remote File Server
-Gluster
-Scripts
-    
+- ARM Template
+⋅⋅* Parameters.json
+⋅⋅* Placement Groups
+* Data transfer tools
+..* Fast Data Transfer Tool
+..* Blobxfer
+..* SCP
+* Batch Shipyard
+..* Remote File Server
+* Gluster
+* Scripts
+..* Create Cluster script
+..* Head node setup script
+..* Compute node setup script  
+
 ### Configuration
 Credentials
 File Server Configuration
