@@ -5,8 +5,8 @@ The purpose of this repository is for a simple configuration of an HPC cluster i
 
 ## Quickstart
 To deploy an Infiniband enabled compute cluster with a Gluster File Server attached and mounted:
-1. Make sure you have quota for H-series (compute cluster) and F-series (jumpbox and storage cluster)
-2. Open the cloud shell from the Azure portal
+- [ ]  Make sure you have quota for H-series (compute cluster) and F-series (jumpbox and storage cluster)
+- [ ] Open the cloud shell from the Azure portal
 3. Clone the repository, `git clone https://github.com/tanewill/azhpc_gfs`
 4. Update the Batch Shipyard RemoteFS credentials file with Service Principal Auth, [required entries](https://github.com/tanewill/azhpc_gfs/blob/master/credentials.yaml)
 5. From inside of the cloned repository folder, run 
@@ -60,19 +60,19 @@ Finally the azuredeploy.json template creates an Azure Files Storage Account whi
     
 ### Tools
 * ARM Template
-    ⋅⋅* Parameters.json
-    ⋅⋅* Placement Groups
+  - Parameters.json
+  - Placement Groups
 * Data transfer tools
-    ⋅⋅* Fast Data Transfer Tool
-    ⋅⋅* Blobxfer
-    ⋅⋅* SCP
+  - Fast Data Transfer Tool
+  - Blobxfer
+  - SCP
 * Batch Shipyard
-    ⋅⋅* Remote File Server
+  - Remote File Server
 * Gluster
 * Scripts
-    ⋅⋅* Create Cluster script
-    ⋅⋅* Head node setup script
-    ⋅⋅* Compute node setup script  
+  - Create Cluster script
+  - Head node setup script
+  - Compute node setup script  
 
 ### Configuration
 Credentials
