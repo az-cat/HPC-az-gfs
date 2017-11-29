@@ -284,7 +284,7 @@
 					"autoUpgradeMinorVersion": true,
 					"settings": {
 						"fileUris": "[variables('vmScripts').scriptsToDownload]",
-						"commandToExecute": "[concat('bash ', 'hn-setup_gfs.sh ',parameters('solver'),' ',parameters('adminUsername'),' Azure@123456 ',parameters('downloadModel'),' ',parameters('license'),' ',parameters('gfsip'), ' > /dev/null 2>&1')]",
+						"commandToExecute": "[concat('bash ', 'hn-setup_gfs.sh ',parameters('solver'),' ',parameters('adminUsername'),' Azure@123456 ',parameters('downloadModel'),' ',parameters('license'),' ',parameters('gfsip'))]",
 						"timestamp": 1234
 					}
 				},
