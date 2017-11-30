@@ -1,5 +1,6 @@
 #!/bin/bash
 #set -x
+#set -e
 
 RG=$1
 COMPNODES=$2
