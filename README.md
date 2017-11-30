@@ -73,8 +73,15 @@ Finally the azuredeploy.json template creates an Azure Files Storage Account whi
   - Parameters.json
   - Placement Groups
 #### Data transfer tools
-  - Fast Data Transfer Tool
-  - Blobxfer
+  There are three different tools that are recommended to transfer data to the file server, the compute cluster, or the storage blob.
+  
+  - Fast Data Transfer Tool (FDT), FDT is a tool for fast ingestion of data into Azure – up to 4 terabytes per hour from a single client machine. It can be used to load data into Storage, to a clustered file system, or anything else that can be mounted into a VM’s file system (e.g. via a FUSE driver).  The FDT client is a command-line application. It requires a server-side component that runs on your own Azure VM(s).
+
+  [Installation instructions for FDT](https://fdtreleases.blob.core.windows.net/beta/FDT%20Instructions-beta.pdf)
+
+  - Blobxfer, blobxfer is an advanced data movement tool and library for Azure Storage Blob and Files. With blobxfer you can copy your files into or out of Azure Storage *with the CLI* or integrate the blobxfer data movement library into your own Python scripts.
+
+  [Installation binaries for blobxfer](https://github.com/Azure/blobxfer/releases)
   - SCP
 #### Batch Shipyard
   Batch Shipyard is used for the configuration of the [stand alone remote file system](http://batch-shipyard.readthedocs.io/en/latest/65-batch-shipyard-remote-fs/). 
