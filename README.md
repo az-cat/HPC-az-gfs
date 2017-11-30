@@ -89,6 +89,7 @@ File Server Configuration
 Standard MD's
 Premium MD's
 Different Servers
+Tools (FDT/Blobxfer/SCP)
 
 ## Cost
 Compute

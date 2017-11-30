@@ -67,7 +67,7 @@ ltsKey=`az storage account keys list --resource-group $RG --account-name $ltsNam
 az storage share create --name longtermstorageone --quota 5000 --account-name $ltsName --account-key $ltsKey
 az storage share create --name longtermstoragetwo --quota 5000 --account-name $ltsName --account-key $ltsKey
 az storage share create --name longtermstoragethree --quota 5000 --account-name $ltsName --account-key $ltsKey
-ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -T -i id_rsa_shipyard_remotefs $user@$jbpip << EOSSH
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -T -t -t -i id_rsa_shipyard_remotefs $user@$jbpip << EOSSH
 sudo sh -c "echo //$ltsName.file.core.windows.net/longtermstorageone /mnt/lts1 cifs vers=3.0,username=$ltsName,password=$ltsKey,dir_mode=0777,file_mode=0777 | tee -a /etc/fstab && echo //$ltsName.file.core.windows.net/longtermstoragetwo /mnt/lts2 cifs vers=3.0,username=$ltsName,password=$ltsKey,dir_mode=0777,file_mode=0777 | tee -a /etc/fstab && echo //$ltsName.file.core.windows.net/longtermstoragethree /mnt/lts3 cifs vers=3.0,username=$ltsName,password=$ltsKey,dir_mode=0777,file_mode=0777 | tee -a /etc/fstab && mount -a"
 EOSSH
 
