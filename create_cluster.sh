@@ -56,7 +56,7 @@ sed -i "s/_COMPNODES/$COMPNODES/g" parameters.json
 sed -i "s/_RGNAME/$RG/g" parameters.json
 sed -i "s/_GFSIP/$nicprivip/g" parameters.json
 sed -i "s%_RSAKEY%$rsakey%g" parameters.json
-az group deployment create --name computedeployment --resource-group $RG --template-file azuredeploy.json --parameters @parameters.json #> /dev/null 2>&1
+az group deployment create --name computedeployment -o table --resource-group $RG --template-file azuredeploy.json --parameters @parameters.json #> /dev/null 2>&1
 
 #GET IP AND SETUP LONGTERM STORAGE ON REMOTE HOST
 jbnicname=`az network nic list -g $RG --query "[?contains(name,'-nic')].{ name: name }" -o tsv`
