@@ -38,7 +38,7 @@ mkdir -p /mnt/gfs
 
 ln -s /mnt/scratch/ /home/$USER/scratch
 ln -s /mnt/gfs /home/$USER/gfs
-ln -s /mnt/lts /home/$USER/lts
+ln -s /mnt/lts1 /home/$USER/lts1
 
 #Following lines are only needed if the head node is an RDMA connected VM
 #impi_version=`ls /opt/intel/impi`
