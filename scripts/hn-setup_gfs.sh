@@ -1,6 +1,6 @@
 #!/bin/bash
 #set -x
-set -e
+#set -e
 
 SOLVER=$1
 USER=$2

@@ -64,11 +64,12 @@ Finally the azuredeploy.json template creates an Azure Files Storage Account whi
 
   The `azuredeploy.json` ARM template calls the two scripts that are located in the `scripts` directory. These scripts are used for the configuration of the head node [hn-setup_gfs.sh](https://github.com/tanewill/azhpc_gfs/blob/master/scripts/hn-setup_gfs.sh) and the compute nodes [cn-setup_gfs.sh](https://github.com/tanewill/azhpc_gfs/blob/master/scripts/cn-setup_gfs.sh). They are designed to be used when there is a Gluster File Server inside of the VNET that the template is deployed in.
 
-  `hn-setup_gfs.sh` performs a number of basic node configuration commands. Installing needed packages and starting the NFS server. [Passwordless authentication](https://github.com/tanewill/azhpc_gfs/blob/master/scripts/hn-setup_gfs.sh#L99-L109) is setup in such a way to allow seperate home directory on each of the nodes,this protects connectivity from being lost in the event that the NFS server goes down. An additional reason that this step was taken is because the jumpbox is not necessarily the same VM type as the compute nodes. The [host list is populated through an nmap](https://github.com/tanewill/azhpc_gfs/blob/master/scripts/hn-setup_gfs.sh#L99-L109) instead of relying on a response from the Azure CLI. [Ganglia is installed](https://github.com/tanewill/azhpc_gfs/blob/master/scripts/hn-setup_gfs.sh#L55-L57) on the jumpbox and all the compute nodes as well.
+  `hn-setup_gfs.sh` performs a number of basic node configuration commands. Installing needed packages and starting the NFS server. [Passwordless authentication](https://github.com/tanewill/azhpc_gfs/blob/master/scripts/hn-setup_gfs.sh#L99-L109) is setup in such a way to allow seperate home directory on each of the nodes,this protects connectivity from being lost in the event that the NFS server locks up. An additional reason that this step was taken is because the jumpbox is not necessarily the same VM type as the compute nodes. The [host list is populated through an nmap](https://github.com/tanewill/azhpc_gfs/blob/master/scripts/hn-setup_gfs.sh#L99-L109) instead of relying on a response from the Azure CLI. [Ganglia is installed](https://github.com/tanewill/azhpc_gfs/blob/master/scripts/hn-setup_gfs.sh#L55-L57) on the jumpbox and all the compute nodes as well. Finally the script installs the selected application on the share, this installation is actually done from the first node in the hostlist.
 
-  `cn-setup_gfs.sh`
+  `cn-setup_gfs.sh` is a simple script that installs a few packages, ganglia, and configures the environment for mpi execution of applications.
 
 #### ARM Template
+  - azuredeploy.json
   - Parameters.json
   - Placement Groups
 #### Data transfer tools
@@ -76,9 +77,9 @@ Finally the azuredeploy.json template creates an Azure Files Storage Account whi
   - Blobxfer
   - SCP
 #### Batch Shipyard
-  - Remote File Server
+  Batch Shipyard is used for the configuration of the [stand alone remote file system](http://batch-shipyard.readthedocs.io/en/latest/65-batch-shipyard-remote-fs/). 
 #### Gluster 
-
+  Batch Shipyard includes support for automatically provisioning a GlusterFS storage cluster for both scale up and scale out scenarios. [Gluster](https://www.gluster.org/) is a free and open source scalable network filesystem, it is a scalable network filesystem. You can create large, distributed storage solutions for media streaming, data analysis, and other data- and bandwidth-intensive tasks. Gluster is free.
 ### Configuration
 Credentials
 File Server Configuration
