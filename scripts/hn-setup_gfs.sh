@@ -31,10 +31,10 @@ mkdir -p /home/$USER/bin
 mkdir -p /mnt/scratch/applications
 mkdir -p /mnt/scratch/INSTALLERS
 mkdir -p /mnt/scratch/benchmark
-mkdir -p /mnt/lts
-mkdir -p /mnt/gfs1
-mkdir -p /mnt/gfs2
-mkdir -p /mnt/gfs3
+mkdir -p /mnt/lts1
+mkdir -p /mnt/lts2
+mkdir -p /mnt/lts3
+mkdir -p /mnt/gfs
 
 ln -s /mnt/scratch/ /home/$USER/scratch
 ln -s /mnt/gfs /home/$USER/gfs
