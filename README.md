@@ -24,7 +24,7 @@ High Performance Computing and storage in the cloud can be very confusing and it
 ### Example Architecture
 ![alt text](https://github.com/tanewill/azhpc_gfs/blob/master/support/azhpc_gfs_arch.png)
 
-## Example Monthly Cost for North Central US
+### Estimated Monthly Cost for North Central US
 Estimates calculated from [Azure Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/)
  - Compute, 80 H16r cores
    - 5 H16 compute nodes @ 75% utilization, $5,459.81/month 
