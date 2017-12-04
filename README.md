@@ -66,9 +66,9 @@ Finally the azuredeploy.json template creates an Azure Files Storage Account whi
   `cn-setup_gfs.sh` is a simple script that installs a few packages, ganglia, and configures the environment for mpi execution of applications.
 
 #### ARM Template
-  - azuredeploy.json
-  - Parameters.json
-  - Placement Groups
+  - `azuredeploy.json` is the primary deployment script, it was taken from the [AHOD-HPC deployment example](https://github.com/tanewill/AHOD-HPC) because there are a number of changes it is a standalone fork. It creates all of the resources needed for this example. This template does not affect the file server at all, that deployment is completely managed by Batch Shipyard.
+  - `Parameters.json` specifies the parameters for the `azuredeploy.json` template.
+  
 #### Data transfer tools
   There are three different tools that are recommended to transfer data to the file server, the compute cluster, or the storage blob.
   
