@@ -51,11 +51,7 @@ Total Cost about $8,577.15/month (~$5,952.42/month with 3 year commit)
 - Now with Azure enabling over 4,000 cores for a single Infiniband enabled MPI job the dataset size can potential exceed the 2TB attached Solid State Disks. With these large datasets a simple and flexible storage solution is needed.
 
 ## Process
-### Credential Configuration
-Batch Shipyard requires a [Service Principal](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?toc=%2Fazure%2Fazure-resource-manager%2Ftoc.json&view=azure-cli-latest) and an authentication key to deploy without any security prompts. In order to generate this enter follow the instructions [here](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal?#create-an-azure-active-directory-application).
-
-![alt text](https://github.com/tanewill/azhpc_gfs/blob/master/support/credentials.png)
-
+  The architecture, credentials, and tooling for creatig
 ### Architecture
 #### Storage Deployment
 There are four different types of storage that will be used for this HPC cluster. Using the default configuration there is over 33TB available for this compute cluster.
@@ -76,7 +72,12 @@ Inside of Azure the architecture is simple. For the compute cluster use an A9 or
 After the file server is created the compute cluster is created in a seperate subnet. The compute cluster is based on the raw compute cluster found in the [AHOD-HPC Github repository](https://github.com/tanewill/AHOD-HPC/). Currently an independant azuredeploy.json is used in this repository, the application configuration scripts that are used are the ones found in the AHOD-HPC repository. For this deployment a [Virtual Machine Scale Set is created](https://github.com/tanewill/azhpc_gfs/blob/master/azuredeploy.json#L298-L350), [a jumpbox is created](https://github.com/tanewill/azhpc_gfs/blob/master/azuredeploy.json#L231-L260) and an [extension is run on the jumpbox](https://github.com/tanewill/azhpc_gfs/blob/master/azuredeploy.json#L261-L288). The extension downloads and calls the [hn-setup_gfs.sh script](https://github.com/tanewill/azhpc_gfs/blob/master/scripts/hn-setup_gfs.sh) which configures the headnode, installs and starts the NFS server, and then launches the [cn-setup_gfs.sh script](https://github.com/tanewill/azhpc_gfs/blob/master/scripts/hn-setup_gfs.sh) which mounts the GFS and NFS file server on all of the compute nodes.
 
 Finally the azuredeploy.json template creates an Azure Files Storage Account which will be used for long term storage. After the ARM template has been fully deployed the create_cluster.sh script is used to get the storage account keys and then mount the storage account to the jumpbox.
-    
+
+### Credential Configuration
+Batch Shipyard requires a [Service Principal](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?toc=%2Fazure%2Fazure-resource-manager%2Ftoc.json&view=azure-cli-latest) and an authentication key to deploy without any security prompts. In order to generate this enter follow the instructions [here](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal?#create-an-azure-active-directory-application).
+
+![alt text](https://github.com/tanewill/azhpc_gfs/blob/master/support/credentials.png) 
+
 ### Tools
 #### Scripts
   Three scripts are used for the deployment of this repository, unlike many ARM templates, this template is not designed to be run independantly. It has been designed to be deployed in connection with other features called in the `create_cluster.sh` script. `create_cluster.sh` is the master script, it downloads Batch Shipyard, deploys a storage file server, a compute cluster, and then mounts Azure Files.
@@ -111,4 +112,4 @@ Finally the azuredeploy.json template creates an Azure Files Storage Account whi
   Batch Shipyard includes support for automatically provisioning a GlusterFS storage cluster for both scale up and scale out scenarios. [Gluster](https://www.gluster.org/) is a free and open source scalable network filesystem, it is a scalable network filesystem. You can create large, distributed storage solutions for media streaming, data analysis, and other data- and bandwidth-intensive tasks. Gluster is free.
 	
 ## Conclusion
-
+  This repository removes the complexity from creating an HPC cluster with an attached and mounted File Server. 
