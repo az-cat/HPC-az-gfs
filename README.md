@@ -107,7 +107,7 @@ Estimates calculated from [Azure Pricing Calculator](https://azure.microsoft.com
    - 12 Premium, P30 Managed Disks. 12 TB, $1,622.04/month
    - 15 TB Azure Files, $912.63/month
 
-Total Cost ~ $8,577.15/month (~ $5,952.42 with 3 year commit)
+Total Cost about $8,577.15/month (~$5,952.42 with 3 year commit)
 	
 ## Conclusion
 
