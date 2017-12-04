@@ -98,9 +98,15 @@ Premium MD's
 Different Servers
 Tools (FDT/Blobxfer/SCP)
 
-## Cost
-Compute
-MD's
+## Cost for NCUS
+ - Compute
+   - 5 H16 compute nodes @ 75% utilization, $5,459.81/month 
+ - Storage, 27 TB
+   - 2 F8 File Servers, $582.67/month
+   - 12 Premium, P30 Managed Disks. 12 TB, $1,622.04/month
+   - 15 TB Azure Files, $912.63/month
+
+Total Cost ~$8,577.15/month (~$5,952.42 with 3 year commit)
 	
 ## Conclusion
 
