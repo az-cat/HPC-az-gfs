@@ -15,6 +15,8 @@ To deploy an Infiniband enabled compute cluster with a Gluster File Server attac
 6. At the completion of deployment you will be given an SSH string to access your cluster, change directories into the folder that was created for your Resource Group name and run the string.
    - Example: `ssh -i id_rsa_batchshipyardkey azureuser@23.45.67.89`
 
+7. Once logged onto the jumpbox, run the command `df -h` to see the storage available on the jumpbox. To see the compute node ip addresses run, `cat bin/hostips`. SSH into the first IP address listed, replace 10.0.0.6 in the followind command with the first IP address listed from the output of the previous command `ssh 10.0.0.6`. The compute nodes are H16r's that are connected via Infiniband for low latency communication.
+
 ## Purpose
 The purpose of this article is to provide an introduction to IaaS HPC and HPC storage in the cloud and to provide some useful tools and information to quickly setup an HPC cluster with four different types of storage.
 
@@ -86,19 +88,8 @@ Finally the azuredeploy.json template creates an Azure Files Storage Account whi
   Batch Shipyard is used for the configuration of the [stand alone remote file system](http://batch-shipyard.readthedocs.io/en/latest/65-batch-shipyard-remote-fs/). 
 #### Gluster 
   Batch Shipyard includes support for automatically provisioning a GlusterFS storage cluster for both scale up and scale out scenarios. [Gluster](https://www.gluster.org/) is a free and open source scalable network filesystem, it is a scalable network filesystem. You can create large, distributed storage solutions for media streaming, data analysis, and other data- and bandwidth-intensive tasks. Gluster is free.
-### Configuration
-Credentials
-File Server Configuration
-    
-### Execution
-	
-## Performance
-Standard MD's
-Premium MD's
-Different Servers
-Tools (FDT/Blobxfer/SCP)
 
-## Cost for NCUS
+## Example Monthly Cost for North Central US
 Estimates calculated from [Azure Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/)
  - Compute
    - 5 H16 compute nodes @ 75% utilization, $5,459.81/month 
