@@ -51,6 +51,11 @@ Total Cost about $8,577.15/month (~$5,952.42/month with 3 year commit)
 - Now with Azure enabling over 4,000 cores for a single Infiniband enabled MPI job the dataset size can potential exceed the 2TB attached Solid State Disks. With these large datasets a simple and flexible storage solution is needed.
 
 ## Process
+### Credential Configuration
+Batch Shipyard requires a [Service Principal](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?toc=%2Fazure%2Fazure-resource-manager%2Ftoc.json&view=azure-cli-latest) and an authentication key to deploy without any security prompts. In order to generate this enter follow the instructions [here](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal?#create-an-azure-active-directory-application).
+
+![alt text](https://github.com/tanewill/azhpc_gfs/blob/master/support/credentials.png)
+
 ### Architecture
 #### Storage Deployment
 There are four different types of storage that will be used for this HPC cluster. Using the default configuration there is over 33TB available for this compute cluster.
