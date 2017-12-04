@@ -99,6 +99,7 @@ Different Servers
 Tools (FDT/Blobxfer/SCP)
 
 ## Cost for NCUS
+Estimates calculated from [Azure Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/)
  - Compute
    - 5 H16 compute nodes @ 75% utilization, $5,459.81/month 
  - Storage, 27 TB
