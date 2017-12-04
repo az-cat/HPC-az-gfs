@@ -1,8 +1,6 @@
 # [DRAFT] Azure HPC Cluster with GFS attached
 The purpose of this repository is for a simple configuration of an HPC cluster inside of Azure with a Gluster File System configured and mounted. Gluster is deployed via Batch Shipyard.
 
-![alt text](https://github.com/tanewill/azhpc_gfs/blob/master/support/azhpc_gfs_arch.png)
-
 ## Quickstart
 To deploy an Infiniband enabled compute cluster with a Gluster File Server attached and mounted:
 1. Make sure you have quota for H-series (compute cluster) and F-series (jumpbox and storage cluster)
@@ -21,6 +19,23 @@ To deploy an Infiniband enabled compute cluster with a Gluster File Server attac
 The purpose of this article is to provide an introduction to IaaS HPC and HPC storage in the cloud and to provide some useful tools and information to quickly setup an HPC cluster with four different types of storage.
 
 ## Introduction
+High Performance Computing and storage in the cloud can be very confusing and it can be difficult to determine where to start. This repository is designed to be a first step in expoloring a cloud based HPC storage and compute architecture. There are many different configuration that could be used, but this repository focuses on an RDMA connected compute cluster and a Gluster file system that is attached. Three different deployment strategies are used, a Bash script for orchastration, an Azure Resource Manager (ARM) template for the compute cluster, and Azure Batch Shipyard for the file server deployment. After deployment fully independant and functioning IaaS HPC compute and storage cluster has been deployed based on the architecture below.
+
+### Example Architecture
+![alt text](https://github.com/tanewill/azhpc_gfs/blob/master/support/azhpc_gfs_arch.png)
+
+## Example Monthly Cost for North Central US
+Estimates calculated from [Azure Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/)
+ - Compute, 80 H16r cores
+   - 5 H16 compute nodes @ 75% utilization, $5,459.81/month 
+ - Storage, 27 TB
+   - 2 F8 File Servers, $582.67/month
+   - 12 Premium, P30 Managed Disks. 12 TB, $1,622.04/month
+   - 15 TB Azure Files, $912.63/month
+
+Total Cost about $8,577.15/month (~$5,952.42/month with 3 year commit)
+
+### HPC in the Cloud
 - HPC in the cloud continues to gain momentum. 
 [Inside HPC Article](https://insidehpc.com/2017/03/long-rise-hpc-cloud/)
 [The Cloud is Great for HPC](https://www.theregister.co.uk/2017/06/16/the_cloud_is_great_for_hpc_discuss/)
@@ -85,20 +100,10 @@ Finally the azuredeploy.json template creates an Azure Files Storage Account whi
   - Secure Copy (SCP), is a protocol based on SSH (Secure Shell) that provides secure file transfers between two computers. With SCP, you can quickly transfer files using the command line, which is often faster and easier. Additionally, you can use this command-line functionality in your own batch files and scripts to automate file transfers.
 
 #### Batch Shipyard
-  Batch Shipyard is used for the configuration of the [stand alone remote file system](http://batch-shipyard.readthedocs.io/en/latest/65-batch-shipyard-remote-fs/). 
+  Batch Shipyard is used for the configuration of the [stand alone remote file system](http://batch-shipyard.readthedocs.io/en/latest/65-batch-shipyard-remote-fs/).
+
 #### Gluster 
   Batch Shipyard includes support for automatically provisioning a GlusterFS storage cluster for both scale up and scale out scenarios. [Gluster](https://www.gluster.org/) is a free and open source scalable network filesystem, it is a scalable network filesystem. You can create large, distributed storage solutions for media streaming, data analysis, and other data- and bandwidth-intensive tasks. Gluster is free.
-
-## Example Monthly Cost for North Central US
-Estimates calculated from [Azure Pricing Calculator](https://azure.microsoft.com/en-us/pricing/calculator/)
- - Compute
-   - 5 H16 compute nodes @ 75% utilization, $5,459.81/month 
- - Storage, 27 TB
-   - 2 F8 File Servers, $582.67/month
-   - 12 Premium, P30 Managed Disks. 12 TB, $1,622.04/month
-   - 15 TB Azure Files, $912.63/month
-
-Total Cost about $8,577.15/month (~$5,952.42 with 3 year commit)
 	
 ## Conclusion
 
