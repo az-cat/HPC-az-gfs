@@ -36,7 +36,7 @@ The purpose of this article is to provide an introduction to IaaS HPC and HPC st
 ## Process
 ### Architecture
 #### Storage Deployment
-There are four different types of storage that will be used for this HPC cluster. Using the default configuration there is over 33TB available for this compute cluster.
+There are four different types of storage that will be used for this HPC cluster. Using the default configuration there is over 29TB available for this compute cluster.
 - Physically Attached Storage as a *burst buffer*, located at `/mnt/resource` on each node
 - NFS shared from the jumpbox and located at `/mnt/scratch`, created in the hn-setup script here: [hn-setup_gfs.sh](https://github.com/tanewill/azhpc_gfs/blob/master/script/hn-setup_gfs.sh#L58-L72)
 - GFS shared from the storage cluster mounted at `/mnt/gfs`, created using Batch Shipyard, [link](http://batch-shipyard.readthedocs.io/en/latest/65-batch-shipyard-remote-fs/), here in [create_cluster.sh](https://github.com/tanewill/azhpc_gfs/blob/master/create_cluster.sh#L34-L39)
