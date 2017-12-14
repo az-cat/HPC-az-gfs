@@ -1,6 +1,15 @@
 # [DRAFT] Azure HPC Cluster with GFS attached
 The purpose of this repository is for a simple configuration of an HPC cluster inside of Azure with a Gluster File System configured and mounted. Gluster is deployed via Batch Shipyard.
 
+Table of Contents
+=================
+* [Quickstart](#Quickstart)
+* [Purpose](#Purpose)
+* [Deployment steps](#Introduction)
+  * [Architecture](#Example Architecture)
+  * [Cost](#Estimated Monthly Cost for North Central US)
+  * [Process](#Process)
+
 ## Quickstart
 To deploy an Infiniband enabled compute cluster with a Gluster File Server attached and mounted:
 1. Make sure you have quota for H-series (compute cluster) and F-series (jumpbox and storage cluster)
