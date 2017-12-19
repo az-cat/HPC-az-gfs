@@ -6,7 +6,7 @@ Table of Contents
 * [Quickstart](#Quickstart)
 * [Purpose](#Purpose)
 * [Introduction](#Introduction)
-  * [Process](##Process)
+  * [Process](#Process)
   * [Cost](#estimated-monthly-cost-for-north-central-us)
   * [Process](#Process)
 
