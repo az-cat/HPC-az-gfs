@@ -41,7 +41,7 @@ SHIPYARD_CONFIGDIR=. shipyard fs cluster add -y mystoragecluster
 
 #DOWNLOAD BLOBXFER AND GET SOME SAMPLE DATA
 #echo ------------------------- `date +%F" "%T` Downloading data 
-#shipyard fs cluster ssh mystoragecluster 'wget -q https://github.com/Azure/blobxfer/releases/download/1.0.0/blobxfer-1.0.0-linux-x86_64 -O blobxfer && ls -all && chmod +x blobxfer && ./blobxfer download --mode file --storage-account btnglusterfiletest --sas "JdSoMKt8/IfUiKlnWTPb0CEJp269JspIbUYbgTZkrB+kkruhYOicbV5mx4azznuYEp7Xgm1fzZs3uJB0ysJY4g==" --remote-path datahydrate --local-path . --file-attributes && ls -all'
+#shipyard fs cluster ssh mystoragecluster 'wget -q https://github.com/Azure/blobxfer/releases/download/1.0.0/blobxfer-1.0.0-linux-x86_64 -O blobxfer && ls -all && chmod +x blobxfer && ./blobxfer download --mode file --storage-account  --sas "XXXXXX" --remote-path datahydrate --local-path . --file-attributes && ls -all'
 
 #GET THE PRIVATE IP ADDRESS OF THE FIRST GFS NODE TO BE USED FOR THE JUMPBOX GLUSTER MOUNT
 nicname=`az network nic list -g $RG --query "[?contains(name,'-ni0')].{ name: name }" -o tsv`
