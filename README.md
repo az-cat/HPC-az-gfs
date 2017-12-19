@@ -3,12 +3,12 @@ The purpose of this repository is for a simple configuration of an HPC cluster i
 
 Table of Contents
 =================
-* [Quickstart](#Quickstart)
-* [Purpose](#Purpose)
-* [Introduction](#Introduction)
-  * [Process](#Process)
-  * [Cost](#estimated-monthly-cost-for-north-central-us)
-  * [Process](#Process)
+* [Purpose](#purpose)
+* [Introduction](#introduction)
+* [Architecture](#example-architecture)
+* [Process](#process)
+* [Cost](#estimated-monthly-cost-for-north-central-us)
+* [Tools](#tools)
 
 # Quickstart
 To deploy an Infiniband enabled compute cluster with a Gluster File Server attached and mounted:
