@@ -7,7 +7,7 @@ Table of Contents
 * [Purpose](#Purpose)
 * [Introduction](#Introduction)
   * [Process](##Process)
-  * [Cost](#Estimated Monthly Cost for North Central US)
+  * [Cost](#estimated-monthly-cost-for-north-central-us)
   * [Process](#Process)
 
 # Quickstart
