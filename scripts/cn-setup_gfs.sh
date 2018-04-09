@@ -58,8 +58,8 @@ if [ $FLAG = NOTMOUNTED ] ; then
 EOF
     
     #chown -R $USER:$USER /mnt/
-    wget -q https://raw.githubusercontent.com/tanewill/AHOD-HPC/master/scripts/full-pingpong.sh -O /home/$USER/full-pingpong.sh
-    wget -q https://raw.githubusercontent.com/tanewill/AHOD-HPC/master/scripts/install_ganglia.sh -O /home/$USER/install_ganglia.sh
+    wget -q https://raw.githubusercontent.com/az-cat/HPC-az-gfs/master/scripts/full-pingpong.sh -O /home/$USER/full-pingpong.sh
+    wget -q https://raw.githubusercontent.com/az-cat/HPC-az-gfs/master/scripts/install_ganglia.sh -O /home/$USER/install_ganglia.sh
     chmod +x /home/$USER/install_ganglia.sh
     sh /home/$USER/install_ganglia.sh $GANG_HOST azure 8649
 

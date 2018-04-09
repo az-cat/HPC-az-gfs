@@ -5,20 +5,8 @@
 			"solver": {
 					"defaultValue": "Raw",
 					"allowedValues": [
-							"ABAQUS",
-							"ANSYS_CFX",
-							"ANSYS_Fluent",
-							"ANSYS_Mechanical",
-							"DataSynapse",
-							"Exa_PowerFlow",
 							"OpenFOAM",
 							"Raw",
-							"StarCCM-10",
-							"StarCCM-11",
-							"StarCCM-12.02010",
-							"StarCCM-12.04010",
-							"StarCCM-12.04011",
-							"StarCCM-12.06004"
 					],
 					"type": "String",
 					"metadata": {
@@ -105,22 +93,7 @@
 			"downloadModel": {
 					"defaultValue": "None",
 					"allowedValues": [
-							"None",
-							"ABAQUS_newStdPerf-1.tgz",
-							"ABAQUS_newStdPerf-2.tgz",
-							"ABAQUS_newStdPerf-3.tgz",
-							"ABAQUS_newStdPerf-4.tgz",
-							"ABAQUS_newXplPerf.tgz",
-							"ABAQUS_oldStdPerf.tgz",
-							"ANSYS_Fluent_aircraft_wing_14m.tar",
-							"ANSYS_Fluent_f1_racecar_140m.tar",
-							"ANSYS_Fluent_sedan_4m.tar",
-							"CCM_Civil.tgz",
-							"CCM_LeMans_17M.tgz",
-							"CCM_LeMans_100M.tgz",
-							"CCM_LeMans_514M.tgz",
-							"CCM_VTM_68M.tgz",
-							"CCM_VTM_178M.tgz"
+							"None"
 					],
 					"type": "String",
 					"metadata": {
@@ -153,8 +126,8 @@
 			"publicIPAddressID": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]",
 			"nicName": "[concat(variables('namingInfix'), '-nic')]",
 			"ipConfigName": "[concat(variables('namingInfix'), 'ipconfig')]",
-			"scriptUrl": "https://raw.githubusercontent.com/tanewill/AHOD-HPC/master/",
-			"gfsScriptUrl": "https://raw.githubusercontent.com/tanewill/azhpc_gfs/master/",
+			"scriptUrl": "https://raw.githubusercontent.com/az-cat/HPC-az-gfs/master/",
+			"gfsScriptUrl": "https://raw.githubusercontent.com/az-cat/HPC-az-gfs/master/",
 			"osType": {
 					"publisher": "OpenLogic",
 					"offer": "CentOS-HPC",
