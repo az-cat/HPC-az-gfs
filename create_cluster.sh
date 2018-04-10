@@ -44,7 +44,8 @@ SHIPYARD_CONFIGDIR=. shipyard fs cluster add -y mystoragecluster
 #shipyard fs cluster ssh mystoragecluster 'wget -q https://github.com/Azure/blobxfer/releases/download/1.0.0/blobxfer-1.0.0-linux-x86_64 -O blobxfer && ls -all && chmod +x blobxfer && ./blobxfer download --mode file --storage-account  --sas "XXXXXX" --remote-path datahydrate --local-path . --file-attributes && ls -all'
 
 #GET THE PRIVATE IP ADDRESS OF THE FIRST GFS NODE TO BE USED FOR THE JUMPBOX GLUSTER MOUNT
-nicname=`az network nic list -g $RG --query "[?contains(name,'-ni0')].{ name: name }" -o tsv`
+echo ------------------------- `date +%F" "%T` Getting private ip address of the first GFS node
+nicname=`az network nic list -g $RG --query "[?contains(name,'-ni000')].{ Name: name }" -o tsv`
 nicprivip=`az network nic show -g $RG -n $nicname --query [ipConfigurations[0].privateIpAddress] -o tsv`
 
 #CREATE COMPUTE CLUSTER USING THE TEMPLATES
@@ -58,6 +59,7 @@ sed -i "s/_GFSIP/$nicprivip/g" parameters.json
 sed -i "s%_RSAKEY%$rsakey%g" parameters.json
 az group deployment create --name computedeployment -o table --resource-group $RG --template-file azuredeploy.json --parameters @parameters.json #> /dev/null 2>&1
 
+
 #GET IP AND SETUP LONGTERM STORAGE ON REMOTE HOST
 jbnicname=`az network nic list -g $RG --query "[?contains(name,'-nic')].{ name: name }" -o tsv`
 jbpipid=`az network nic show -g $RG -n $jbnicname --query [ipConfigurations[0].publicIpAddress.id] -o tsv`
@@ -67,6 +69,7 @@ ltsKey=`az storage account keys list --resource-group $RG --account-name $ltsNam
 az storage share create --name longtermstorageone --quota 5000 --account-name $ltsName --account-key $ltsKey
 az storage share create --name longtermstoragetwo --quota 5000 --account-name $ltsName --account-key $ltsKey
 az storage share create --name longtermstoragethree --quota 5000 --account-name $ltsName --account-key $ltsKey
+
 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -T -i id_rsa_shipyard_remotefs $user@$jbpip << EOSSH
 sudo sh -c "echo //$ltsName.file.core.windows.net/longtermstorageone /mnt/lts1 cifs vers=3.0,username=$ltsName,password=$ltsKey,dir_mode=0777,file_mode=0777 | tee -a /etc/fstab && echo //$ltsName.file.core.windows.net/longtermstoragetwo /mnt/lts2 cifs vers=3.0,username=$ltsName,password=$ltsKey,dir_mode=0777,file_mode=0777 | tee -a /etc/fstab && echo //$ltsName.file.core.windows.net/longtermstoragethree /mnt/lts3 cifs vers=3.0,username=$ltsName,password=$ltsKey,dir_mode=0777,file_mode=0777 | tee -a /etc/fstab && mount -a && exit"
 EOSSH
